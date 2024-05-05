@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@import "sass/themes//default";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  min-width: 0;
+  font: inherit;
+  outline-color: var(--accentColor);
+}
+
+:focus {
+  outline-style: dashed;
+}
+
+::selection {
+  background-color: var(--accentColor);
+  color: var(--accentColorText);
+}
+
+body {
+  min-height: 100dvh;
+  width: 100%;
+}
+
+img,
+video,
+svg {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+html,
+body {
+  background-color: var(--backgroundColor);
+  color: var(--colorText);
+  font-size: 1em;
+  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  line-height: 1.5;
+  font-synthesis: none;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  scrollbar-width: thin;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}

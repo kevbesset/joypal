@@ -1,0 +1,34 @@
+:root {
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Accent colors
+    --accentColor: #23c69e;
+    --accentColorLight: #e3fef7;
+    --accentColorDark: #10a37f;
+    --accentColorText: white;
+
+    // Background colors
+    --backgroundColor: #282a2e;
+    --foregroundColor: #3f424a;
+    --highlightColor: #1e1f22;
+    --highlightEmphasisColor: transparent;
+
+    // Text colors
+    --colorText: white;
+    --colorMuted: #ababab;
+    --colorPlaceholder: #a0a7bb;
+
+    // Misc colors
+    --colorToolbar: var(--highlightColor);
+    --colorStroke: transparent;
+
+    [data-theme="inner"] {
+      --backgroundColor: #3f424a;
+      --foregroundColor: #4b4f5b;
+      --highlightColor: #28303f;
+      --highlightEmphasisColor: #202633;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+.message {
+  $block-selector: &;
+
+  position: relative;
+
+  &__avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate3d(-50%, 0, 0);
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5em;
+    background-color: var(--foregroundColor);
+    overflow: hidden;
+
+    #{$block-selector}--assistant & {
+      background-color: var(--accentColor);
+    }
+  }
+
+  &__info {
+    padding: 0 1.375em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+  }
+
+  &__author {
+    font-weight: bold;
+    font-size: 0.75em;
+    flex-shrink: 0;
+  }
+
+  &__date {
+    flex: 1;
+    font-size: 0.5em;
+    color: var(--colorMuted);
+  }
+
+  &__box {
+    padding: 0.75em 1.375em;
+    background-color: var(--foregroundColor);
+    border-radius: 1em;
+
+    #{$block-selector}--assistant & {
+      background-color: var(--highlightColor);
+    }
+  }
+
+  &__content {
+    font-size: 0.875em;
+  }
+
+  &__action {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+  }
+
+  &__actionButton {
+    background-color: var(--highlightEmphasisColor);
+  }
+
+  &__actionInner {
+    font-size: 0.75em;
+    opacity: 0.8;
+    gap: 0.5em;
+  }
+
+  &__actionIcon {
+    font-size: 0.875em;
+    opacity: 0.3;
+    line-height: 1;
+  }
+}

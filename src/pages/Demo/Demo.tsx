@@ -11,7 +11,7 @@ type Message = {
   model?: string;
 };
 
-function Demo() {
+export default function Demo() {
   const [promptValue, setPromptValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [nextMessage, setNextMessage] = useState<Message>();
@@ -164,5 +164,3 @@ function Demo() {
     </main>
   );
 }
-
-export default Demo;

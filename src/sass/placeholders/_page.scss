@@ -1,0 +1,17 @@
+%page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+%page__header {
+  display: flex;
+  align-items: center;
+  height: 4em;
+  flex-shrink: 0;
+}
+
+%page__title {
+  font-size: 1.25em;
+  font-weight: bold;
+}

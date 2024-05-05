@@ -1,0 +1,25 @@
+@import "@/sass/placeholders/page";
+
+.dashboard {
+  @extend %page;
+  padding-right: 1em;
+  padding-bottom: 1em;
+
+  &__header {
+    @extend %page__header;
+  }
+
+  &__title {
+    @extend %page__title;
+    padding-left: 1.5em;
+    flex: 1;
+  }
+
+  &__body {
+    border-radius: 0.5em;
+    background-color: var(--backgroundColor);
+    padding: 1em;
+    flex: 1;
+    overflow: hidden;
+  }
+}

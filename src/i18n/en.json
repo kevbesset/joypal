@@ -1,0 +1,14 @@
+{
+  "chatbox": {
+    "prompt": {
+      "placeholder": "Ask questions, or type '/' for commands"
+    },
+    "separator": "Today",
+    "message": {
+      "action": {
+        "copy": "Copy",
+        "redo": "Generate response"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+@import "@/sass/placeholders/page";
+
+.sidebar {
+  width: 20em;
+  padding: 0 0.5em;
+
+  &__header {
+    @extend %page__header;
+
+    gap: 0.625em;
+    padding: 0 0.5em;
+  }
+
+  &__title {
+    @extend %page__title;
+
+    flex: 1;
+  }
+}

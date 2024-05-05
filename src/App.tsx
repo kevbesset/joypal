@@ -1,11 +1,15 @@
-import Demo from "@/components/Demo";
+import bem from "react-bemthis";
+import { Outlet } from "react-router-dom";
+import styles from "./App.module.scss";
+import Toolbar from "./components/layouts/Toolbar";
 
-function App() {
+const { block } = bem(styles);
+
+export default function App() {
   return (
-    <>
-      <Demo />
-    </>
+    <div className={block()}>
+      <Toolbar />
+      <Outlet />
+    </div>
   );
 }
-
-export default App;

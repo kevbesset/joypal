@@ -1,0 +1,24 @@
+.button {
+  border: none;
+  border-radius: 0.5em;
+  box-shadow: none;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  appearance: button;
+  display: inline-flex;
+  gap: 0.25em;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--highlightColor);
+  color: var(--colorText);
+
+  &--highlight {
+    background-color: var(--accentColor);
+  }
+
+  &--icon {
+    padding: 0;
+    width: 2em;
+    height: 2em;
+  }
+}
