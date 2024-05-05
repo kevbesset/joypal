@@ -1,0 +1,22 @@
+@import "reset";
+@import "theme";
+
+html,
+body {
+  background-color: hsl(var(--colorBackground));
+  color: hsl(var(--colorText));
+  font-size: 1em;
+  font-family: var(--font);
+  font-weight: normal;
+  line-height: 1.5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  scrollbar-width: thin;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}

@@ -1,0 +1,35 @@
+.demo {
+  $block-selector: &;
+
+  display: flex;
+  min-height: 100dvh;
+
+  &__body {
+    flex: 1;
+    padding: 5em;
+  }
+
+  &__wrapper {
+    max-width: 48em;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__prompt {
+    width: 100%;
+    margin-bottom: 5em;
+  }
+
+  &__message {
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  &__author {
+    font-family: monospace;
+  }
+
+  &__messageContent {
+    padding: 0 1em;
+  }
+}
