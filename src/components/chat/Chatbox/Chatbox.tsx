@@ -12,12 +12,15 @@ export default function Chatbox() {
   const { t } = useTranslation();
   const scrollableView = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  function scrollToBottom() {
     scrollableView.current?.scrollIntoView({
-      //   behavior: "smooth",
       block: "end",
     });
-  });
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
   return (
     <div className={block()}>

@@ -16,4 +16,16 @@
 
     flex: 1;
   }
+
+  &__tabs,
+  &__search {
+    padding: 0 0.5em;
+    margin-bottom: 1em;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
 }

@@ -11,16 +11,21 @@ export default function Prompt() {
 
   return (
     <div className={block()}>
-      <input
-        type="text"
-        name="prompt"
-        id="prompt"
-        autoFocus
-        autoComplete="off"
-        placeholder={t("chatbox.prompt.placeholder")}
-        className={element("input")}
-      />
-      <Button className={element("mic")}>
+      <div className={element("inner")}>
+        <input
+          type="text"
+          name="prompt"
+          id="prompt"
+          autoFocus
+          autoComplete="off"
+          placeholder={t("chatbox.prompt.placeholder")}
+          className={element("input")}
+        />
+        <Button icon className={element("send")}>
+          <Icon name="send" />
+        </Button>
+      </div>
+      <Button className={element("button")}>
         <Icon name="mic" />
       </Button>
     </div>

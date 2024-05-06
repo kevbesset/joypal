@@ -1,0 +1,52 @@
+.tabs {
+  position: relative;
+  width: 100%;
+  background: var(--foregroundColor);
+  border-radius: 0.5em;
+  padding: 0.25em;
+
+  &__list {
+    position: relative;
+    display: flex;
+  }
+
+  &__item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    padding: 0.75em;
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0.375em;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: var(--textColor);
+
+    &--active {
+      color: var(--accentColor);
+    }
+  }
+
+  &__tracer {
+    position: absolute;
+    bottom: 0.25em;
+    left: 0.25em;
+    height: calc(100% - 0.5em);
+    background-color: var(--colorTracer);
+    border-radius: 0.375em;
+    transition: all 350ms cubic-bezier(0.87, -0.41, 0.19, 1.44);
+    box-shadow: 0 1.25em 1em -0.5em var(--colorShadow);
+  }
+
+  &__icon {
+    font-size: 0.75em;
+  }
+
+  &__text {
+    font-size: 0.625em;
+    font-weight: 600;
+  }
+}

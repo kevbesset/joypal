@@ -1,0 +1,59 @@
+.message-card {
+  $blockSelector: &;
+
+  width: 100%;
+  display: flex;
+  padding: 0.625em 0.5em;
+  gap: 0.5em;
+  border-radius: 0.5em;
+  cursor: pointer;
+
+  &:hover:not(&--active) {
+    background-color: var(--colorInput);
+  }
+
+  &--active {
+    background-color: var(--primaryColor);
+    cursor: default;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+
+    #{$blockSelector}--active & {
+      color: var(--colorPrimaryIcon);
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375em;
+  }
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+  }
+
+  &__title {
+    font-size: 0.875em;
+    font-weight: bold;
+    flex: 1;
+  }
+
+  &__date {
+    flex-shrink: 0;
+    font-size: 0.625em;
+    color: var(--colorMuted);
+  }
+
+  &__content {
+    font-size: 0.75em;
+    color: var(--colorMuted);
+
+    #{$blockSelector}--active & {
+      color: var(--colorText);
+    }
+  }
+}

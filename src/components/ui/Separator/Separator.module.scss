@@ -12,7 +12,7 @@
   &::after {
     content: "";
     height: 1px;
-    background-color: var(--foregroundColor);
+    background-color: var(--colorStroke);
     flex: 1;
   }
 }

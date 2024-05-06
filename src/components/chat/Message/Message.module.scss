@@ -1,5 +1,5 @@
 .message {
-  $block-selector: &;
+  $blockSelector: &;
 
   position: relative;
 
@@ -17,7 +17,7 @@
     background-color: var(--foregroundColor);
     overflow: hidden;
 
-    #{$block-selector}--assistant & {
+    #{$blockSelector}--assistant & {
       background-color: var(--accentColor);
     }
   }
@@ -46,7 +46,7 @@
     background-color: var(--foregroundColor);
     border-radius: 1em;
 
-    #{$block-selector}--assistant & {
+    #{$blockSelector}--assistant & {
       background-color: var(--highlightColor);
     }
   }

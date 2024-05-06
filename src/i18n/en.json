@@ -1,5 +1,8 @@
 {
   "chatbox": {
+    "sidebar": {
+      "title": "My Chats"
+    },
     "prompt": {
       "placeholder": "Ask questions, or type '/' for commands"
     },
