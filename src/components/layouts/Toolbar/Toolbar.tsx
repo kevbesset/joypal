@@ -1,5 +1,7 @@
 import bem from "react-bemthis";
 import Logo from "../Logo/Logo";
+import Nav from "../Nav";
+import Settings from "../Settings";
 import styles from "./Toolbar.module.scss";
 
 const { block, element } = bem(styles);
@@ -10,8 +12,8 @@ export default function Toolbar() {
       <div className={element("header")}>
         <Logo />
       </div>
-      <nav className={element("nav")}></nav>
-      <div className={element("settings")}></div>
+      <Nav />
+      <Settings />
     </aside>
   );
 }

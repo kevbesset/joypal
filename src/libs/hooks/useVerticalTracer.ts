@@ -1,12 +1,12 @@
 import { MutableRefObject, useEffect, useState } from "react";
 
-export default function useTracer(
+export default function useVerticalTracer(
   trackRef: MutableRefObject<HTMLElement | null>,
-  trackSelector: string
+  trackSelector: string,
+  offset = 0
 ) {
   const [styles, setStyles] = useState({
-    transform: `translate3d(0, 0, 0)`,
-    width: `0px`,
+    transform: `translate3d(0, ${offset}px, 0)`,
   });
 
   const observer = new MutationObserver(refresh);
@@ -19,8 +19,7 @@ export default function useTracer(
 
       if (activeEl) {
         setStyles({
-          transform: `translate3d(${activeEl.offsetLeft}px, 0, 0)`,
-          width: `${activeEl.offsetWidth}px`,
+          transform: `translate3d(0, ${activeEl.offsetTop + offset}px, 0)`,
         });
       }
     }

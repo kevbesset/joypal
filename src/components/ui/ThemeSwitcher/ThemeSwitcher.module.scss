@@ -1,0 +1,52 @@
+.theme-switcher {
+  position: relative;
+  width: 2em;
+  border-radius: 0.75em;
+  background-color: var(--foregroundColor);
+  padding: 0.375em;
+
+  &__list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25em;
+  }
+
+  &__item {
+    width: 1.25em;
+    height: 1.25em;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: var(--colorText);
+
+    &--active {
+      color: var(--colorText);
+    }
+  }
+
+  &__icon {
+    font-size: 0.75em;
+  }
+
+  &__tracer {
+    position: absolute;
+    top: 0.375em;
+    left: 0.375em;
+    width: 1.25em;
+    height: 1.25em;
+    border-radius: 0.5em;
+    background-color: var(--colorThemeSwitcher);
+    pointer-events: none;
+    box-shadow: 0 1.25em 1em -0.5em var(--colorShadow);
+    transition: all 350ms cubic-bezier(0.87, -0.41, 0.19, 1.44);
+  }
+}

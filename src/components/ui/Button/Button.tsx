@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { PropsWithChildren } from "react";
+import { MouseEventHandler, PropsWithChildren } from "react";
 import bem from "react-bemthis";
 import styles from "./Button.module.scss";
 
@@ -10,6 +10,7 @@ type Props = PropsWithChildren & {
   type?: "submit" | "button";
   highlight?: boolean;
   icon?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function Button({
@@ -18,9 +19,11 @@ export default function Button({
   type,
   highlight,
   icon,
+  onClick,
 }: Props) {
   return (
     <button
+      onClick={onClick}
       type={type || "button"}
       className={classNames(
         className,

@@ -1,0 +1,31 @@
+.nav {
+  position: relative;
+  flex: 1;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+  }
+
+  &__item {
+    background-color: var(--colorNav);
+    color: var(--accentColor);
+
+    &--active {
+      background-color: var(--accentColor);
+      color: var(--accentColorText);
+    }
+  }
+
+  &__tracer {
+    position: absolute;
+    top: 0;
+    left: -1em;
+    transform: translate3d(0, -0.5em, 0);
+    pointer-events: none;
+    height: 2.9375em;
+    width: auto;
+    transition: all 350ms cubic-bezier(0.87, -0.41, 0.19, 1.44);
+  }
+}

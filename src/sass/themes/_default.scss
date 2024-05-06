@@ -19,11 +19,14 @@
 
   // Misc colors
   --colorToolbar: var(--backgroundColor);
+  --colorToolbarStroke: var(--highlightColor);
   --colorStroke: #eaeaea;
   --colorShadow: rgba(135, 135, 135, 0.4);
   --colorTracer: var(--backgroundColor);
   --colorInput: color-mix(in oklch, transparent, #d6d6d6 25%);
   --colorPrimaryIcon: var(--colorText);
+  --colorNav: #f9f9f9;
+  --colorThemeSwitcher: white;
 
   [data-theme="inner"] {
     --backgroundColor: #f5f5f5;
@@ -61,11 +64,14 @@
 
     // Misc colors
     --colorToolbar: var(--highlightColor);
+    --colorToolbarStroke: #2d2e30;
     --colorStroke: transparent;
     --colorShadow: rgba(30, 31, 34, 0.4);
     --colorTracer: var(--highlightColor);
     --colorInput: color-mix(in oklch, transparent, var(--foregroundColor) 15%);
     --colorPrimaryIcon: var(--accentColor);
+    --colorNav: color-mix(in oklch, transparent, #d9d9d9 8%);
+    --colorThemeSwitcher: #64666d;
 
     [data-theme="inner"] {
       --backgroundColor: #3f424a;

@@ -9,8 +9,7 @@
   margin: 0;
   min-width: 0;
   font: inherit;
-  outline-color: var(--accentColor);
-  accent-color: var(--accentColor);
+  outline-color: color-mix(in oklch, transparent, currentColor 30%);
 }
 
 :focus {

@@ -1,0 +1,45 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+
+  &__item {
+    position: relative;
+    background-color: var(--colorNav);
+    color: var(--accentColor);
+
+    &--active {
+      background-color: var(--accentColor);
+      color: var(--accentColorText);
+    }
+  }
+
+  &__avatar {
+    border-radius: 0.5em;
+  }
+
+  &__hr {
+    border-color: var(--colorToolbarStroke);
+  }
+
+  &__formula {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: var(--colorText);
+    color: var(--backgroundColor);
+    line-height: 1;
+    border-radius: 0.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.125em 0.25em;
+  }
+
+  &__formulaText {
+    font-size: 0.5rem;
+    font-weight: bold;
+    line-height: 1;
+  }
+}
