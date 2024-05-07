@@ -47,6 +47,6 @@
     background-color: var(--colorThemeSwitcher);
     pointer-events: none;
     box-shadow: 0 1.25em 1em -0.5em var(--colorShadow);
-    transition: all 350ms cubic-bezier(0.87, -0.41, 0.19, 1.44);
+    transition: all var(--transition);
   }
 }

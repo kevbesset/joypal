@@ -26,6 +26,6 @@
     pointer-events: none;
     height: 2.9375em;
     width: auto;
-    transition: all 350ms cubic-bezier(0.87, -0.41, 0.19, 1.44);
+    transition: all var(--transition);
   }
 }

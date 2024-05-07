@@ -12,6 +12,10 @@
   background-color: var(--highlightColor);
   color: var(--colorText);
 
+  &:hover {
+    filter: brightness(var(--brightnessHover));
+  }
+
   &--highlight {
     background-color: var(--accentColor);
     color: var(--accentColorText);
