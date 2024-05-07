@@ -43,6 +43,9 @@
   }
 
   &__box {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
     padding: 0.75em 1.375em;
     background-color: var(--foregroundColor);
     border-radius: 1em;
@@ -54,12 +57,29 @@
 
   &__content {
     font-size: 0.875em;
+    white-space: pre-wrap;
   }
 
   &__action {
     display: flex;
     justify-content: flex-end;
     gap: 1em;
+  }
+
+  &__actionInfo {
+    background-color: var(--foregroundColor);
+    padding: 0.25em 0.5em;
+    display: flex;
+    gap: 0.25em;
+    border-radius: 0.5em;
+  }
+
+  &__actionLabel {
+    font-size: 0.75em;
+  }
+
+  &__actionValue {
+    font-size: 0.75em;
   }
 
   &__actionButton {

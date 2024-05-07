@@ -1,22 +1,31 @@
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
+import { ChatMessage } from "@/types/Chat.type";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
 import styles from "./Message.module.scss";
 
 const { block, element } = bem(styles);
 
-type Props = {
-  role: "user" | "assistant";
-};
+type Props = ChatMessage;
 
-export default function Message({ role }: Props) {
+export default function Message(message: Props) {
   const { t } = useTranslation();
 
+  const messageDate = Intl.DateTimeFormat("en", {
+    day: "numeric",
+    month: "short",
+  }).format(message.created_at);
+
+  const messageTime = Intl.DateTimeFormat("en", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(message.created_at);
+
   return (
-    <div className={block(role)}>
+    <div className={block(message.role)}>
       <div className={element("avatar")}>
-        {role === "user" ? (
+        {message.role === "user" ? (
           <img
             src="https://media.licdn.com/dms/image/C4E03AQGm-rwpONAatw/profile-displayphoto-shrink_400_400/0/1601377777018?e=2147483647&v=beta&t=G9A_yIODEox92NRv0f8VeEGK4XYQGPtEsFV-9e6AzXQ"
             alt=""
@@ -29,19 +38,28 @@ export default function Message({ role }: Props) {
       </div>
       <div className={element("info")}>
         <div className={element("author")}>
-          {role === "user" ? "You" : "Assistant"}
+          {message.role === "user" ? "You" : "Assistant"}
         </div>
-        <small className={element("date")}>24 Sep • 11:30 PM</small>
+        <small className={element("date")}>
+          {messageDate} • {messageTime}
+        </small>
       </div>
       <div className={element("box")}>
-        <div className={element("content")}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor vel quo
-          laborum cumque! Animi nostrum ab similique earum nesciunt, accusamus,
-          laudantium blanditiis temporibus ad laboriosam voluptas cum voluptatem
-          atque sapiente.
-        </div>
-        {role === "assistant" && (
+        <div className={element("content")}>{message.content}</div>
+        {message.role === "assistant" && message.done && (
           <div className={element("action")}>
+            <div className={element("actionInfo")}>
+              <div className={element("actionLabel")}>
+                <Icon name="language" />
+              </div>
+              <div className={element("actionValue")}>{message.model}</div>
+            </div>
+            <div className={element("actionInfo")}>
+              <div className={element("actionLabel")}>
+                <Icon name="hourglass_top" />
+              </div>
+              <div className={element("actionValue")}>{message.duration}ms</div>
+            </div>
             <Button className={element("actionButton")}>
               <Icon name="refresh" className={element("actionIcon")} />
               <span className={element("actionInner")}>

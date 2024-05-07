@@ -47,11 +47,6 @@ export default function Sidebar() {
       </div>
       <div className={element("list")}>
         <MessageCard active />
-        <MessageCard />
-        <MessageCard />
-        <MessageCard />
-        <MessageCard />
-        <MessageCard />
       </div>
     </aside>
   );
