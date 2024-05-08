@@ -1,40 +1,46 @@
-import MessageCard from "@/components/chat/MessageCard";
+import ChannelCard from "@/components/chat/ChannelCard";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Search from "@/components/ui/Search";
 import Tabs from "@/components/ui/Tabs";
+import { useAppSelector } from "@/store";
+import { selectAvailableChannels } from "@/store/chatSlice";
 import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
 
 const { block, element } = bem(styles);
-const tabs = [
-  {
-    key: "chats",
-    count: 25,
-    icon: "chat_bubble",
-    label: "Chats",
-  },
-  {
-    key: "favorites",
-    count: 4,
-    icon: "bookmark",
-    label: "Favorites",
-  },
-];
 
 export default function Sidebar() {
+  const channels = useAppSelector(selectAvailableChannels);
   const { t } = useTranslation();
+
+  const tabs = [
+    {
+      key: "chats",
+      count: channels.length,
+      icon: "chat_bubble",
+      label: t("chatbox.sidebar.tabs.chats"),
+    },
+    {
+      key: "favorites",
+      icon: "bookmark",
+      label: t("chatbox.sidebar.tabs.favs"),
+    },
+  ];
   const [activeTab, setActiveTab] = useState(tabs[0].key);
 
   return (
     <aside className={block()}>
       <div className={element("header")}>
         <div className={element("title")}>{t("chatbox.sidebar.title")}</div>
-        <Button highlight icon>
-          <Icon name="add" />
-        </Button>
+        <Link to="/">
+          <Button icon highlight>
+            <Icon name="add" />
+          </Button>
+        </Link>
         <Button icon>
           <Icon name="more_horiz" />
         </Button>
@@ -46,7 +52,10 @@ export default function Sidebar() {
         <Search name="sidebar_chat_search" />
       </div>
       <div className={element("list")}>
-        <MessageCard active />
+        {channels &&
+          channels
+            .filter((channel) => channel.messages?.length)
+            .map((channel) => <ChannelCard key={channel.id} {...channel} />)}
       </div>
     </aside>
   );

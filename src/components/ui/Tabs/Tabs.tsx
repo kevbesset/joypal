@@ -47,7 +47,7 @@ export default function Tabs({ tabs, active, onTabChange }: Props) {
                   <Icon name={tab.icon} fill className={element("icon")} />
                 )}
                 <span className={element("text")}>{tab.label}</span>
-                {tab.count && (
+                {!!tab.count && (
                   <Badge highlight={active === tab.key}>{tab.count}</Badge>
                 )}
               </Component>

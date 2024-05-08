@@ -1,4 +1,4 @@
-.message-card {
+.channel-card {
   $blockSelector: &;
 
   width: 100%;
@@ -29,10 +29,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.375em;
+    flex: 1;
   }
 
   &__header {
     display: flex;
+    gap: 1em;
     align-items: baseline;
   }
 
@@ -40,6 +42,9 @@
     font-size: 0.875em;
     font-weight: bold;
     flex: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   &__date {

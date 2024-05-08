@@ -1,7 +1,11 @@
 {
   "chatbox": {
     "sidebar": {
-      "title": "My Chats"
+      "title": "My Chats",
+      "tabs": {
+        "chats": "Chats",
+        "favs": "Favorites"
+      }
     },
     "prompt": {
       "placeholder": "Ask questions, or type '/' for commands"

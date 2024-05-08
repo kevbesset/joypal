@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
+import { formatDate, formatTime } from "@/libs/helpers/date";
 import { ChatMessage } from "@/types/Chat.type";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
@@ -12,15 +13,9 @@ type Props = ChatMessage;
 export default function Message(message: Props) {
   const { t } = useTranslation();
 
-  const messageDate = Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "short",
-  }).format(message.created_at);
+  const messageDate = formatDate(new Date(message.created_at));
 
-  const messageTime = Intl.DateTimeFormat("en", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(message.created_at);
+  const messageTime = formatTime(new Date(message.created_at));
 
   return (
     <div className={block(message.role)}>

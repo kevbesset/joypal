@@ -24,7 +24,7 @@ export default function Prompt({ onSubmit }: Props) {
   }
 
   function handleSubmit(event: KeyboardEvent<HTMLInputElement>) {
-    if (!event.shiftKey && event.code === "Enter") {
+    if (!event.shiftKey && ["Enter", "NumpadEnter"].includes(event.code)) {
       clearPrompt();
 
       if (promptValue) {

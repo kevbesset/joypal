@@ -1,9 +1,20 @@
+import { useAppDispatch, useAppSelector } from "@/store";
+import { update } from "@/store/chatSlice";
 import { ChatMessage } from "@/types/Chat.type";
 import Ollama from "ollama/browser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { uid } from "../helpers/uniqueId";
 
-export default function useChat() {
-  const [messageHistory, setMessageHistory] = useState<ChatMessage[]>([]);
+export default function useChat(channelId?: string) {
+  const navigate = useNavigate();
+  const channels = useAppSelector((state) => state.chat.channels);
+
+  const [uniqueId] = useState(uid());
+  const [messageHistory, setMessageHistory] = useState<ChatMessage[]>(
+    channels?.find((chan) => chan.id === channelId)?.messages || []
+  );
+  const dispatch = useAppDispatch();
 
   async function sendMessage(message: ChatMessage) {
     // Add message to the list
@@ -23,7 +34,7 @@ export default function useChat() {
         role: "assistant",
         content: "",
         model: message.model,
-        created_at: new Date(),
+        created_at: Date.now(),
         done: false,
       },
     ]);
@@ -44,7 +55,21 @@ export default function useChat() {
     }
   }
 
+  // If channelId is not found, redirect to "new chat"
+  useEffect(() => {
+    if (channelId && !channels.find((chan) => chan.id === channelId)) {
+      navigate("/");
+    }
+  }, [channelId, channels, navigate]);
+
+  useEffect(() => {
+    dispatch(
+      update({ channelId: channelId || uniqueId, messages: messageHistory })
+    );
+  }, [messageHistory, channelId, dispatch, uniqueId]);
+
   return {
+    channelId: channelId || uniqueId,
     messages: messageHistory,
     sendMessage,
   };

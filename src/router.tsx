@@ -12,6 +12,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
+      {
+        path: "c/:channelId",
+        element: <Dashboard />,
+      },
     ],
   },
   {
