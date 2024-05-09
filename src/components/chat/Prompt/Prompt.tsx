@@ -23,13 +23,17 @@ export default function Prompt({ onSubmit }: Props) {
     setPromptValue("");
   }
 
+  function sendSubmitEvent() {
+    clearPrompt();
+
+    if (promptValue) {
+      onSubmit(promptValue);
+    }
+  }
+
   function handleSubmit(event: KeyboardEvent<HTMLInputElement>) {
     if (!event.shiftKey && ["Enter", "NumpadEnter"].includes(event.code)) {
-      clearPrompt();
-
-      if (promptValue) {
-        onSubmit(promptValue);
-      }
+      sendSubmitEvent();
     }
   }
 
@@ -48,7 +52,11 @@ export default function Prompt({ onSubmit }: Props) {
           onKeyDown={handleSubmit}
           onChange={handleInputChange}
         />
-        <Button icon className={element("send")}>
+        <Button
+          icon
+          className={element("send")}
+          onClick={() => sendSubmitEvent()}
+        >
           <Icon name="send" />
         </Button>
       </div>

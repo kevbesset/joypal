@@ -66,22 +66,6 @@
     gap: 1em;
   }
 
-  &__actionInfo {
-    background-color: var(--foregroundColor);
-    padding: 0.25em 0.5em;
-    display: flex;
-    gap: 0.25em;
-    border-radius: 0.5em;
-  }
-
-  &__actionLabel {
-    font-size: 0.75em;
-  }
-
-  &__actionValue {
-    font-size: 0.75em;
-  }
-
   &__actionButton {
     background-color: var(--highlightEmphasisColor);
   }

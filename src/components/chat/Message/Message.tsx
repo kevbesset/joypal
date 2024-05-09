@@ -4,6 +4,7 @@ import { formatDate, formatTime } from "@/libs/helpers/date";
 import { ChatMessage } from "@/types/Chat.type";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
+import MessageData from "../MessageData";
 import styles from "./Message.module.scss";
 
 const { block, element } = bem(styles);
@@ -43,18 +44,7 @@ export default function Message(message: Props) {
         <div className={element("content")}>{message.content}</div>
         {message.role === "assistant" && message.done && (
           <div className={element("action")}>
-            <div className={element("actionInfo")}>
-              <div className={element("actionLabel")}>
-                <Icon name="language" />
-              </div>
-              <div className={element("actionValue")}>{message.model}</div>
-            </div>
-            <div className={element("actionInfo")}>
-              <div className={element("actionLabel")}>
-                <Icon name="hourglass_top" />
-              </div>
-              <div className={element("actionValue")}>{message.duration}ms</div>
-            </div>
+            <MessageData {...message} />
             <Button className={element("actionButton")}>
               <Icon name="refresh" className={element("actionIcon")} />
               <span className={element("actionInner")}>

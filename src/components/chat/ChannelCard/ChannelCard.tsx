@@ -12,7 +12,7 @@ type Props = ChatChannel & {
 };
 
 export default function ChannelCard({ active, ...channel }: Props) {
-  const title = channel.messages[0].content;
+  const title = channel.title || channel.messages[0].content;
   const lastMessage = channel.messages[channel.messages.length - 1];
   const time = formatTime(new Date(lastMessage.created_at));
   const shortenDescription = lastMessage.content.slice(0, 80);

@@ -3,11 +3,17 @@ export type ChatMessage = {
   content: string;
   model: string;
   created_at: number;
-  done: boolean;
-  duration?: number;
+  done?: boolean;
+  total_duration?: number; // time spent generating the response (in ns)
+  load_duration?: number; // time spent in ns loading the model
+  prompt_eval_count?: number; // number of tokens in the prompt
+  prompt_eval_duration?: number; // time spent in nanoseconds evaluating the prompt
+  eval_count?: number; // number of tokens in the response
+  eval_duration?: number; // time in nanoseconds spent generating the response
 };
 
 export type ChatChannel = {
   id: string;
+  title?: string;
   messages: ChatMessage[];
 };

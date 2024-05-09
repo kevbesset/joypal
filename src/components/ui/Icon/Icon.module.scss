@@ -30,6 +30,7 @@
     font-feature-settings: "liga";
     -webkit-font-smoothing: antialiased;
     max-width: 1em;
+    overflow: hidden;
   }
 
   &--fill::before {

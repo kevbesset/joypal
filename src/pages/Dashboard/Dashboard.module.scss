@@ -7,12 +7,11 @@
 
   &__header {
     @extend %page__header;
+    justify-content: space-between;
   }
 
   &__title {
-    @extend %page__title;
-    padding-left: 1.5em;
-    flex: 1;
+    padding-left: 1em;
   }
 
   &__body {

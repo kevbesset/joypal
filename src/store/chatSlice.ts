@@ -18,6 +18,9 @@ export const chatSlice = createSlice({
       state,
       action: PayloadAction<{ channelId: string; messages: ChatMessage[] }>
     ) => {
+      // Clear empty
+      state.channels = state.channels.filter((chan) => chan.messages?.length);
+
       const channelIndex = state.channels.findIndex(
         (chan) => chan.id === action.payload.channelId
       );
@@ -31,14 +34,11 @@ export const chatSlice = createSlice({
         });
       }
     },
-    clear: (state) => {
-      state.channels = state.channels.filter((chan) => chan.messages?.length);
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { update, clear } = chatSlice.actions;
+export const { update } = chatSlice.actions;
 
 const selectChannels = (state: RootState) => state.chat.channels;
 

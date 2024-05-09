@@ -5,18 +5,18 @@ import { Fragment, useEffect, useRef } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import Message from "../Message/Message";
+import Message from "../Message";
 import Prompt from "../Prompt";
 import styles from "./Chatbox.module.scss";
 
 const { block, element } = bem(styles);
-const DEFAULT_MODEL = "llama3:latest";
 
 type Props = {
   channelId?: string;
+  model: string;
 };
 
-export default function Chatbox({ channelId: routeChannelId }: Props) {
+export default function Chatbox({ channelId: routeChannelId, model }: Props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const routeParams = useParams();
@@ -34,7 +34,7 @@ export default function Chatbox({ channelId: routeChannelId }: Props) {
     await sendMessage({
       role: "user",
       content,
-      model: DEFAULT_MODEL,
+      model,
       created_at: Date.now(),
       done: true,
     });

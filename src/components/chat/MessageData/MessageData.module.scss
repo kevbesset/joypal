@@ -1,0 +1,22 @@
+.data {
+  display: flex;
+  gap: 0.5em;
+  flex: 1;
+
+  &__item {
+    background-color: color-mix(
+      in oklch,
+      transparent,
+      var(--foregroundColor) 30%
+    );
+    padding: 0.25em 0.5em;
+    display: flex;
+    gap: 0.25em;
+    border-radius: 0.5em;
+  }
+
+  &__label,
+  &__value {
+    font-size: 0.75em;
+  }
+}

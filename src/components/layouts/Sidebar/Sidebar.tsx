@@ -8,7 +8,7 @@ import { selectAvailableChannels } from "@/store/chatSlice";
 import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
 
 const { block, element } = bem(styles);
@@ -16,6 +16,7 @@ const { block, element } = bem(styles);
 export default function Sidebar() {
   const channels = useAppSelector(selectAvailableChannels);
   const { t } = useTranslation();
+  const { channelId } = useParams();
 
   const tabs = [
     {
@@ -55,7 +56,13 @@ export default function Sidebar() {
         {channels &&
           channels
             .filter((channel) => channel.messages?.length)
-            .map((channel) => <ChannelCard key={channel.id} {...channel} />)}
+            .map((channel) => (
+              <ChannelCard
+                key={channel.id}
+                {...channel}
+                active={channel.id === channelId}
+              />
+            ))}
       </div>
     </aside>
   );
