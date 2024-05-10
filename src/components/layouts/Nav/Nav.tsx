@@ -1,8 +1,9 @@
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import useVerticalTracer from "@/libs/hooks/useVerticalTracer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import bem from "react-bemthis";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Nav.module.scss";
 import tracer from "./nav-tracer.png";
 
@@ -11,20 +12,24 @@ const { block, element } = bem(styles);
 const menu = [
   {
     icon: "chat_bubble",
+    to: "/",
   },
   {
     icon: "storefront",
+    to: "/store",
   },
   {
     icon: "published_with_changes",
+    to: "/test",
   },
   {
     icon: "settings",
+    to: "/test",
   },
 ];
 
 export default function Nav() {
-  const [activePage, setActivePage] = useState(menu[0].icon);
+  const location = useLocation();
   const listRef = useRef(null);
   const activeSelector = element("item", "active").split(" ").pop();
   const { styles, refresh } = useVerticalTracer(
@@ -35,7 +40,7 @@ export default function Nav() {
 
   useEffect(() => {
     refresh();
-  }, [activePage]);
+  }, [location]);
 
   return (
     <div className={block()}>
@@ -48,16 +53,16 @@ export default function Nav() {
       />
       <nav ref={listRef} className={element("list")}>
         {menu.map((menuItem) => (
-          <Button
-            key={menuItem.icon}
-            icon
-            className={element("item", {
-              active: activePage === menuItem.icon,
-            })}
-            onClick={() => setActivePage(menuItem.icon)}
-          >
-            <Icon name={menuItem.icon} />
-          </Button>
+          <Link key={menuItem.icon} to={menuItem.to}>
+            <Button
+              icon
+              className={element("item", {
+                active: location.pathname === menuItem.to,
+              })}
+            >
+              <Icon name={menuItem.icon} />
+            </Button>
+          </Link>
         ))}
       </nav>
     </div>

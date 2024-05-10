@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import Demo from "./pages/Demo";
+import Store from "./pages/Store";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "c/:channelId",
         element: <Dashboard />,
+      },
+      {
+        path: "store",
+        element: <Store />,
       },
     ],
   },
