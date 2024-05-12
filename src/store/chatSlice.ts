@@ -1,3 +1,4 @@
+import { getFromStorage, setFromStorage } from "@/libs/helpers/storage";
 import { RootState } from "@/store";
 import { ChatChannel, ChatMessage } from "@/types/Chat.type";
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
@@ -7,7 +8,7 @@ type ChatState = {
 };
 
 const initialState: ChatState = {
-  channels: [],
+  channels: getFromStorage("channels") || [],
 };
 
 export const chatSlice = createSlice({
@@ -33,6 +34,8 @@ export const chatSlice = createSlice({
           messages: action.payload.messages,
         });
       }
+
+      setFromStorage("channels", state.channels);
     },
   },
 });
