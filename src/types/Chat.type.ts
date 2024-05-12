@@ -1,4 +1,5 @@
 export type ChatMessage = {
+  id: string;
   role: string;
   content: string;
   model: string;

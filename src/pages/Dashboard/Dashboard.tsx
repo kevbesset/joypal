@@ -14,7 +14,7 @@ const DEFAULT_MODEL = "llama3:latest";
 
 export default function Dashboard() {
   const params = useParams();
-  const [channelId, setChannelId] = useState(params.channelId);
+  const channelId = params.channelId || "new";
   const [model, setModel] = useState<string>(DEFAULT_MODEL);
   const { channel } = useChat(channelId);
 
@@ -23,12 +23,14 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    setChannelId(params.channelId);
-
-    if (channel && channel.messages.length) {
+    if (
+      channel &&
+      channel.messages.length &&
+      model !== channel.messages[channel.messages.length - 1].model
+    ) {
       setModel(channel.messages[channel.messages.length - 1].model);
     }
-  }, [params, channel]);
+  }, [channelId, channel, model]);
 
   return (
     <>

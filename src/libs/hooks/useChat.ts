@@ -1,88 +1,89 @@
 import { useAppDispatch, useAppSelector } from "@/store";
-import { update } from "@/store/chatSlice";
-import { ChatChannel, ChatMessage } from "@/types/Chat.type";
-import Ollama from "ollama/browser";
-import { useEffect, useState } from "react";
+import { save, selectChannel, write } from "@/store/chatSlice";
+import { ChatMessage } from "@/types/Chat.type";
 import { useNavigate } from "react-router-dom";
 import { uid } from "../helpers/uniqueId";
+import { streamingChat } from "../services/chatService";
 
-export default function useChat(channelId?: string) {
-  const navigate = useNavigate();
-  const channels = useAppSelector((state) => state.chat.channels);
-
-  const [uniqueId] = useState(uid());
-  const [channel, setChannel] = useState<ChatChannel>();
-  const [messageHistory, setMessageHistory] = useState<ChatMessage[]>(
-    getDefaultMessageHistory()
-  );
+export default function useChat(channelId: string) {
+  const channel = useAppSelector(selectChannel(channelId));
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  function getDefaultMessageHistory() {
-    return channels?.find((chan) => chan.id === channelId)?.messages || [];
+  function createMessage(
+    content: string,
+    model: string,
+    role: string,
+    done = true
+  ) {
+    return {
+      id: uid(),
+      role,
+      content,
+      model,
+      created_at: Date.now(),
+      done,
+    };
   }
 
-  async function sendMessage(message: ChatMessage) {
-    // Add message to the list
-    setMessageHistory((history) => [...history, message]);
+  async function sendMessage(content: string, model: string) {
+    const message = createMessage(content, model, "user");
+    await handleMessage(message);
+    await handleChannelUpdate();
+  }
 
-    // Call API to get the message response
-    const response = await Ollama.chat({
-      model: message.model,
-      messages: [...messageHistory, message],
-      stream: true,
-    });
+  async function handleMessage(message: ChatMessage) {
+    // Push user message
+    dispatch(write({ channelId: channel.id, message }));
 
-    // Handle the response stream
-    setMessageHistory((history) => [
-      ...history,
-      {
-        role: "assistant",
-        content: "",
-        model: message.model,
-        created_at: Date.now(),
-        done: false,
-      },
-    ]);
+    await handleMessageResponse(message);
+  }
+
+  async function handleMessageResponse(userMessage: ChatMessage) {
+    const response = await streamingChat(
+      [...channel.messages, userMessage],
+      userMessage.model
+    );
+
+    // Create message with empty content
+    const responseMessage = await createMessage(
+      "",
+      userMessage.model,
+      "assistant",
+      false
+    );
+
+    let messageContent = "";
 
     for await (const chunk of response) {
-      setMessageHistory((history) => {
-        const nextHistory = [...history];
+      messageContent += chunk.message.content;
 
-        const streamingMessage = nextHistory[nextHistory.length - 1];
-        nextHistory[nextHistory.length - 1] = {
-          ...streamingMessage,
-          ...chunk,
-          created_at: chunk.created_at
-            ? new Date(chunk.created_at).getTime()
-            : streamingMessage.created_at,
-          content: streamingMessage.content + chunk.message.content,
-        };
-
-        return nextHistory;
-      });
+      dispatch(
+        write({
+          channelId: channel.id,
+          message: {
+            ...responseMessage,
+            ...chunk,
+            content: messageContent,
+            created_at: chunk.created_at
+              ? new Date(chunk.created_at).getTime()
+              : responseMessage.created_at,
+          },
+        })
+      );
     }
   }
 
-  // If channelId is not found, redirect to "new chat"
-  useEffect(() => {
-    setChannel(channels?.find((chan) => chan.id === channelId));
-    if (channelId && !channels.find((chan) => chan.id === channelId)) {
-      navigate("/");
+  async function handleChannelUpdate() {
+    if (channelId === "new") {
+      const newChannelId = uid();
+      await dispatch(save(newChannelId));
+      return navigate(`/c/${newChannelId}`);
     }
-  }, [channelId, channels, navigate]);
-
-  useEffect(() => {
-    if (messageHistory.length) {
-      dispatch(
-        update({ channelId: channelId || uniqueId, messages: messageHistory })
-      );
-    }
-  }, [messageHistory, channelId, dispatch, uniqueId]);
+  }
 
   return {
     channel,
-    channelId: channelId || uniqueId,
-    messages: messageHistory,
     sendMessage,
   };
 }

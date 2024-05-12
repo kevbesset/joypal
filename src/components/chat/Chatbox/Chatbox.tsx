@@ -4,7 +4,7 @@ import useChat from "@/libs/hooks/useChat";
 import { Fragment, useEffect, useRef } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Message from "../Message";
 import Prompt from "../Prompt";
 import styles from "./Chatbox.module.scss";
@@ -12,17 +12,17 @@ import styles from "./Chatbox.module.scss";
 const { block, element } = bem(styles);
 
 type Props = {
-  channelId?: string;
+  channelId: string;
   model: string;
 };
 
-export default function Chatbox({ channelId: routeChannelId, model }: Props) {
+export default function Chatbox({ channelId, model }: Props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const routeParams = useParams();
+  const location = useLocation();
 
   const scrollableView = useRef<HTMLDivElement>(null);
-  const { channelId, messages, sendMessage } = useChat(routeChannelId);
+  const { channel, sendMessage } = useChat(channelId);
 
   function scrollToBottom() {
     scrollableView.current?.scrollIntoView({
@@ -31,31 +31,34 @@ export default function Chatbox({ channelId: routeChannelId, model }: Props) {
   }
 
   async function handlePromptSubmit(content: string) {
-    await sendMessage({
-      role: "user",
-      content,
-      model,
-      created_at: Date.now(),
-      done: true,
-    });
-    if (!routeParams.channelId) {
-      return navigate(`/c/${channelId}`);
-    }
+    await sendMessage(content, model);
   }
 
   useEffect(() => {
+    if (
+      channelId &&
+      channel.messages.length === 0 &&
+      location.pathname !== "/"
+    ) {
+      navigate("/");
+    }
+  });
+
+  useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [channel.messages]);
 
   return (
     <div className={block()}>
       <div className={element("body")}>
         <div ref={scrollableView} className={element("list")}>
-          {messages &&
-            messages.map((message, messageIndex) => {
+          {channel.messages &&
+            channel.messages.map((message, messageIndex) => {
               const isFirstMessageToday =
                 messageIndex > 0 &&
-                !dateIsToday(new Date(messages[messageIndex - 1].created_at));
+                !dateIsToday(
+                  new Date(channel.messages[messageIndex - 1].created_at)
+                );
 
               return (
                 <Fragment key={messageIndex}>

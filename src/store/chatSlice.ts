@@ -15,25 +15,58 @@ export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    update: (
+    write: (
       state,
-      action: PayloadAction<{ channelId: string; messages: ChatMessage[] }>
+      action: PayloadAction<{ channelId: string; message: ChatMessage }>
     ) => {
-      // Clear empty
-      state.channels = state.channels.filter((chan) => chan.messages?.length);
+      const { channelId, message } = action.payload;
 
       const channelIndex = state.channels.findIndex(
-        (chan) => chan.id === action.payload.channelId
+        (chan) => chan.id === channelId
+      );
+
+      if (channelIndex < 0) {
+        // No channel found, let's create it
+        state.channels.push({
+          id: channelId,
+          messages: [message],
+        });
+      } else {
+        // Channel found, let's update it
+        const channel = state.channels[channelIndex];
+        const messageIndex = channel.messages.findIndex(
+          (msg) => msg.id === message.id
+        );
+
+        if (messageIndex < 0) {
+          // No message found, let's add it
+          state.channels[channelIndex].messages = [
+            ...channel.messages,
+            message,
+          ];
+        } else {
+          // Message found, let's update it
+          state.channels[channelIndex].messages[messageIndex] = message;
+        }
+      }
+
+      setFromStorage("channels", state.channels);
+    },
+    save: (state, action: PayloadAction<string>) => {
+      const channelIndex = state.channels.findIndex(
+        (chan) => chan.id === "new"
       );
 
       if (channelIndex >= 0) {
-        state.channels[channelIndex].messages = action.payload.messages;
-      } else {
-        state.channels.push({
-          id: action.payload.channelId,
-          messages: action.payload.messages,
-        });
+        state.channels[channelIndex].id = action.payload;
       }
+
+      setFromStorage("channels", state.channels);
+    },
+    remove: (state, action: PayloadAction<string>) => {
+      state.channels = state.channels.filter(
+        (chan) => chan.id !== action.payload
+      );
 
       setFromStorage("channels", state.channels);
     },
@@ -41,7 +74,7 @@ export const chatSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { update } = chatSlice.actions;
+export const { remove, write, save } = chatSlice.actions;
 
 const selectChannels = (state: RootState) => state.chat.channels;
 
@@ -49,5 +82,15 @@ export const selectAvailableChannels = createSelector(
   [selectChannels],
   (channels) => channels.filter((chan) => chan.messages.length)
 );
+
+export const selectChannel = (channelId: string) =>
+  createSelector(
+    [selectChannels],
+    (channels) =>
+      channels.find((chan) => chan.id === channelId) || {
+        id: channelId,
+        messages: [],
+      }
+  );
 
 export default chatSlice.reducer;
