@@ -26,9 +26,9 @@ export default function Sidebar() {
       label: t("chatbox.sidebar.tabs.chats"),
     },
     {
-      key: "favorites",
-      icon: "bookmark",
-      label: t("chatbox.sidebar.tabs.favs"),
+      key: "pals",
+      icon: "diversity_1",
+      label: t("chatbox.sidebar.tabs.pals"),
     },
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].key);

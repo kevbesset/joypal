@@ -21,11 +21,6 @@ export default function ChannelCard({ active, ...channel }: Props) {
   const title = channel.title || channel.messages[0].content;
   const lastMessage = channel.messages[channel.messages.length - 1];
   const time = formatTime(new Date(lastMessage.created_at));
-  const shortenDescription = lastMessage.content.slice(0, 80);
-  const description =
-    shortenDescription.length < lastMessage.content.length
-      ? `${shortenDescription}...`
-      : shortenDescription;
   const dispatch = useAppDispatch();
 
   function handleRemoveChannel(event: MouseEvent<HTMLButtonElement>) {
@@ -38,15 +33,12 @@ export default function ChannelCard({ active, ...channel }: Props) {
 
   return (
     <Link to={`/c/${channel.id}`} className={block({ active })}>
-      <div className={element("icon")}>
-        <Icon name="pet_supplies" />
-      </div>
       <div className={element("info")}>
         <div className={element("header")}>
           <div className={element("title")}>{title}</div>
           <div className={element("date")}>{time}</div>
         </div>
-        <div className={element("content")}>{description}</div>
+        <div className={element("content")}>{lastMessage.content}</div>
       </div>
       <div className={element("action")}>
         <Button

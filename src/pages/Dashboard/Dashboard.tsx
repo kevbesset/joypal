@@ -6,7 +6,7 @@ import Icon from "@/components/ui/Icon";
 import useChat from "@/libs/hooks/useChat";
 import { useEffect, useState } from "react";
 import bem from "react-bemthis";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import styles from "./Dashboard.module.scss";
 
 const { block, element } = bem(styles);
@@ -45,6 +45,7 @@ export default function Dashboard() {
           </Button>
         </div>
         <main data-theme="inner" className={element("body")}>
+          <Outlet />
           <Chatbox
             key={channelId}
             model={model || DEFAULT_MODEL}

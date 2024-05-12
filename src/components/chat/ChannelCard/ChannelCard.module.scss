@@ -4,7 +4,8 @@
   position: relative;
   width: 100%;
   display: flex;
-  padding: 0.625em 0.5em;
+  align-items: center;
+  padding: 0.5em 0.5em;
   gap: 0.5em;
   border-radius: 0.5em;
   cursor: pointer;
@@ -18,19 +19,11 @@
     cursor: default;
   }
 
-  &__icon {
-    flex-shrink: 0;
-
-    #{$blockSelector}--active & {
-      color: var(--colorPrimaryIcon);
-    }
-  }
-
   &__info {
     display: flex;
     flex-direction: column;
-    gap: 0.375em;
     flex: 1;
+    line-height: 1.2;
 
     #{$blockSelector}:hover & {
       mask-image: linear-gradient(
@@ -65,8 +58,11 @@
   }
 
   &__content {
-    font-size: 0.75em;
+    font-size: 0.625em;
     color: var(--colorMuted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
     #{$blockSelector}--active & {
       color: var(--colorText);
