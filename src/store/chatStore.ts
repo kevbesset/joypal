@@ -11,7 +11,7 @@ const initialState: ChatState = {
   channels: getFromStorage("channels") || [],
 };
 
-export const chatSlice = createSlice({
+export const chatStore = createSlice({
   name: "chat",
   initialState,
   reducers: {
@@ -89,7 +89,7 @@ export const chatSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { remove, write, save, rename } = chatSlice.actions;
+export const { remove, write, save, rename } = chatStore.actions;
 
 const selectChannels = (state: RootState) => state.chat.channels;
 
@@ -108,4 +108,4 @@ export const selectChannel = (channelId: string) =>
       }
   );
 
-export default chatSlice.reducer;
+export default chatStore.reducer;

@@ -22,7 +22,6 @@ export type ChatChannel = {
 export type ChatFolder = {
   id: string;
   name: string;
-  position: number;
   parent?: string;
 };
 

@@ -7,6 +7,7 @@ import { remove, rename } from "@/store/chatStore";
 import { ChatChannel } from "@/types/Chat.type";
 import {
   ChangeEvent,
+  FocusEvent,
   KeyboardEvent,
   MouseEvent as ReactMouseEvent,
   useState,
@@ -52,6 +53,10 @@ export default function ChannelCard({ active, ...channel }: Props) {
     dispatch(rename({ channelId: channel.id, name: event.target.value }));
   }
 
+  function handleFocus(event: FocusEvent<HTMLInputElement>) {
+    event.target.select();
+  }
+
   function handleSubmit(event: KeyboardEvent<HTMLInputElement>) {
     if (["Enter", "NumpadEnter", "Escape"].includes(event.code)) {
       closeRenaming();
@@ -80,18 +85,17 @@ export default function ChannelCard({ active, ...channel }: Props) {
       onDoubleClick={handleDoubleClick}
     >
       {isRenaming ? (
-        <>
-          <input
-            type="text"
-            name="rename_channel"
-            id="rename_channel"
-            className={element("input")}
-            value={title}
-            onChange={handleInputChange}
-            onKeyDown={handleSubmit}
-            autoFocus
-          />
-        </>
+        <input
+          type="text"
+          name="rename_channel"
+          id="rename_channel"
+          className={element("input")}
+          value={title}
+          onChange={handleInputChange}
+          onKeyDown={handleSubmit}
+          onFocus={handleFocus}
+          autoFocus
+        />
       ) : (
         <>
           <div className={element("info")}>

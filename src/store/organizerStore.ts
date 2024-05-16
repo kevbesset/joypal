@@ -1,8 +1,9 @@
 import { sortChannels } from "@/libs/helpers/sort";
-import { getFromStorage } from "@/libs/helpers/storage";
+import { getFromStorage, setFromStorage } from "@/libs/helpers/storage";
+import { uid } from "@/libs/helpers/uniqueId";
 import { RootState } from "@/store";
 import { ChatChannelOrganizer, ChatFolder } from "@/types/Chat.type";
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 
 type OrganizerState = {
   folders: ChatFolder[];
@@ -14,10 +15,39 @@ const initialState: OrganizerState = {
   channelLocation: getFromStorage("channelLocation") || {},
 };
 
-export const chatSlice = createSlice({
+export const organizerStore = createSlice({
   name: "chat",
   initialState,
   reducers: {
+    create: (state) => {
+      state.folders.push({
+        id: uid(),
+        name: "New folder",
+      });
+
+      setFromStorage("folders", state.folders);
+    },
+    rename: (
+      state,
+      action: PayloadAction<{ folderId: string; name: string }>
+    ) => {
+      const folderIndex = state.folders.findIndex(
+        (folder) => folder.id === action.payload.folderId
+      );
+
+      if (folderIndex >= 0) {
+        state.folders[folderIndex].name = action.payload.name;
+      }
+
+      setFromStorage("folders", state.folders);
+    },
+    remove: (state, action: PayloadAction<string>) => {
+      state.folders = state.folders.filter(
+        (folder) => folder.id !== action.payload
+      );
+
+      setFromStorage("folders", state.folders);
+    },
     move: (state) => {
       console.log("move", state);
     },
@@ -25,7 +55,7 @@ export const chatSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { move } = chatSlice.actions;
+export const { move, create, rename, remove } = organizerStore.actions;
 
 const selectFolders = (state: RootState) => state.organizer.folders;
 const selectChannelLocation = (state: RootState) =>
@@ -67,4 +97,4 @@ export const selectChannelsWithoutFolder = createSelector(
   }
 );
 
-export default chatSlice.reducer;
+export default organizerStore.reducer;
