@@ -23,6 +23,10 @@ const menu = [
     to: "/scenario",
   },
   {
+    icon: "diversity_1",
+    to: "/pals",
+  },
+  {
     icon: "settings",
     to: "/settings",
   },
