@@ -1,5 +1,4 @@
 import bem from "react-bemthis";
-import Button from "../Button";
 import Icon from "../Icon";
 import styles from "./Search.module.scss";
 
@@ -23,9 +22,6 @@ export default function Search({
         className={element("input")}
       />
       <Icon name="search" className={element("icon")} />
-      <Button icon className={element("filter")}>
-        <Icon name="filter_list" />
-      </Button>
     </div>
   );
 }

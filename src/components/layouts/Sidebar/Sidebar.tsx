@@ -4,7 +4,7 @@ import Icon from "@/components/ui/Icon";
 import Search from "@/components/ui/Search";
 import Tabs from "@/components/ui/Tabs";
 import { useAppSelector } from "@/store";
-import { selectAvailableChannels } from "@/store/chatSlice";
+import { selectAvailableChannels } from "@/store/chatStore";
 import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
@@ -50,6 +50,9 @@ export default function Sidebar() {
       </div>
       <div className={element("search")}>
         <Search name="sidebar_chat_search" />
+        <Button icon className={element("newFolder")}>
+          <Icon name="create_new_folder" />
+        </Button>
       </div>
       <ChannelList />
     </aside>

@@ -5,7 +5,8 @@
       "tabs": {
         "chats": "Chats",
         "pals": "Pals"
-      }
+      },
+      "newChat": "New Chat"
     },
     "prompt": {
       "placeholder": "Ask questions, or type '/' for commands"

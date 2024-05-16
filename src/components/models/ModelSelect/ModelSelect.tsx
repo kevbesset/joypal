@@ -41,6 +41,7 @@ export default function ModelSelect({ value, onModelSelect }: Props) {
         focus: state.isFocused,
       }),
     menuList: () => element("list"),
+    indicatorsContainer: () => element("indicator"),
     option: (state: ClassState) =>
       element("option", {
         focus: state.isFocused,

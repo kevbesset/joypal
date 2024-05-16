@@ -29,6 +29,7 @@ export const chatSlice = createSlice({
         // No channel found, let's create it
         state.channels.push({
           id: channelId,
+          title: message.content,
           messages: [message],
         });
       } else {
@@ -70,11 +71,25 @@ export const chatSlice = createSlice({
 
       setFromStorage("channels", state.channels);
     },
+    rename: (
+      state,
+      action: PayloadAction<{ channelId: string; name: string }>
+    ) => {
+      const channelIndex = state.channels.findIndex(
+        (chan) => chan.id === action.payload.channelId
+      );
+
+      if (channelIndex >= 0) {
+        state.channels[channelIndex].title = action.payload.name;
+      }
+
+      setFromStorage("channels", state.channels);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { remove, write, save } = chatSlice.actions;
+export const { remove, write, save, rename } = chatSlice.actions;
 
 const selectChannels = (state: RootState) => state.chat.channels;
 

@@ -36,4 +36,8 @@
       background-color: var(--foregroundColor);
     }
   }
+
+  &__indicator {
+    color: var(--colorPlaceholder);
+  }
 }

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store";
-import { save, selectChannel, write } from "@/store/chatSlice";
+import { save, selectChannel, write } from "@/store/chatStore";
 import { ChatMessage } from "@/types/Chat.type";
 import { useNavigate } from "react-router-dom";
 import { uid } from "../helpers/uniqueId";

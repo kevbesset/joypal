@@ -18,3 +18,12 @@ export type ChatChannel = {
   title?: string;
   messages: ChatMessage[];
 };
+
+export type ChatFolder = {
+  id: string;
+  name: string;
+  position: number;
+  parent?: string;
+};
+
+export type ChatChannelOrganizer = Record<string, string>;

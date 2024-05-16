@@ -1,8 +1,6 @@
 .search {
   position: relative;
   width: 100%;
-  display: flex;
-  gap: 0.625em;
 
   &__input {
     width: 100%;
@@ -53,10 +51,5 @@
     left: 0.5em;
     transform: translate3d(0, -50%, 0);
     color: var(--colorPlaceholder);
-  }
-
-  &__filter {
-    flex-shrink: 0;
-    color: var(--accentColor);
   }
 }
