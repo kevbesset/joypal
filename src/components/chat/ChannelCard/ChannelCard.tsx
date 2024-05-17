@@ -18,11 +18,12 @@ import styles from "./ChannelCard.module.scss";
 
 const { block, element } = bem(styles);
 
-type Props = ChatChannel & {
+type Props = {
   active?: boolean;
+  channel: ChatChannel;
 };
 
-export default function ChannelCard({ active, ...channel }: Props) {
+export default function ChannelCard({ active, channel, ...props }: Props) {
   const [isRenaming, setIsRenaming] = useState(false);
   const itemRef = useClickOutside(handleClickOutside);
   const routeParams = useParams();
@@ -83,6 +84,7 @@ export default function ChannelCard({ active, ...channel }: Props) {
       to={`/c/${channel.id}`}
       className={block({ active, isRenaming })}
       onDoubleClick={handleDoubleClick}
+      {...props}
     >
       {isRenaming ? (
         <input
