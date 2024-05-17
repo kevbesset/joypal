@@ -1,5 +1,5 @@
 import { chat } from "@/libs/services/chatService";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import bem from "react-bemthis";
 import { Link } from "react-router-dom";
 import styles from "./LiveTranslation.module.scss";
@@ -13,45 +13,70 @@ recognition.interimResults = true;
 recognition.continuous = true;
 recognition.lang = "fr";
 
+const useDebounce = (callback, delay) => {
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    // Cleanup the previous timeout on re-render
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const debouncedCallback = (...args) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+
+  return debouncedCallback;
+};
+
 function useLiveTranslation(text: string, lang = "english") {
-  const [currentTextTranslated, setCurrentTextTranslated] = useState("");
+  const [previousText, setPreviousText] = useState("");
   const [output, setOutput] = useState("");
 
+  const handleTranslation = useDebounce(() => {
+    checkForTranslation();
+  }, 500);
+
   async function checkForTranslation() {
-    const textToTranslate = text.slice(currentTextTranslated.length);
-    const textContext = text.slice(0, currentTextTranslated.length);
-    const hasTextToTranslate = true; // check if not only ponctuations / emojis
-    if (textToTranslate && hasTextToTranslate) {
-      await setCurrentTextTranslated(text);
-      await translate(textToTranslate, textContext);
+    if (text && text !== previousText) {
+      await translate();
+      await setPreviousText(text);
     }
   }
 
-  async function translate(textToTranslate: string, textContext: string) {
-    console.log("translate", textToTranslate);
+  async function translate() {
+    console.log("translate", { text, previousText });
     const response = await chat(
       [
         {
           role: "user",
-          content: `You are a super translator, I want you to translate in ${lang} what I just give you.
-          Important rule: Just give me the translation of the text to translate, no extra text around
+          content: `Important rule: Just write the same text from "text to translate" translated in ${lang}, nothing more
 
           Text to translate:
-          ${textToTranslate}
+          ${text}
 
-          Here's what was before the text you need to translate:
-          ${textContext}
+          Here's the text you translated last time, try to be consistent (no need to re-translate it, it is just to help you):
+          ${previousText}
           `,
         },
       ],
       "llama3:latest"
     );
 
-    setOutput((o) => `${o} ${response.message.content}`);
+    setOutput(response.message.content);
   }
 
   useEffect(() => {
-    checkForTranslation();
+    handleTranslation();
   }, [text]);
 
   return { output };
@@ -67,10 +92,9 @@ function useVoiceRecognition() {
   useEffect(() => {
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = Object.values(event.results)
-        .filter((result) => result.isFinal)
+        // .filter((result) => result.isFinal)
         .map((result) => result[0].transcript)
-        .join("\n");
-      console.log("onresult", transcript);
+        .join(".\n");
 
       setInput(transcript);
     };
