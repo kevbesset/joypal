@@ -10,11 +10,12 @@ type Props = {
   fill?: boolean;
 };
 
-export default function Icon({ name, fill, className }: Props) {
+export default function Icon({ name, fill, className, ...props }: Props) {
   return (
     <span
       className={classNames(className, block(["material", { fill }]))}
       data-icon={name}
+      {...props}
     ></span>
   );
 }

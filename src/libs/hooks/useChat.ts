@@ -17,7 +17,7 @@ export default function useChat(channelId: string) {
     done = true
   ) {
     return {
-      id: uid(),
+      id: `m/${uid()}`,
       role,
       content,
       model,
@@ -76,7 +76,7 @@ export default function useChat(channelId: string) {
 
   async function handleChannelUpdate() {
     if (channelId === "new") {
-      const newChannelId = uid();
+      const newChannelId = `c/${uid()}`;
       await dispatch(save(newChannelId));
       return navigate(`/c/${newChannelId}`);
     }

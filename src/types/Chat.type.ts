@@ -25,4 +25,7 @@ export type ChatFolder = {
   parent?: string;
 };
 
-export type ChatChannelOrganizer = Record<string, string>;
+export type ChatChannelOrganizer = {
+  channelId: string;
+  folderId: string;
+};
