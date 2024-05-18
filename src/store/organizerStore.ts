@@ -23,7 +23,7 @@ export const organizerStore = createSlice({
   reducers: {
     create: (state) => {
       state.folders.push({
-        id: `f--${uid()}`,
+        id: `f${uid()}`,
         name: "New folder",
       });
 

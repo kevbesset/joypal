@@ -30,7 +30,7 @@ export default function Dashboard() {
     ) {
       setModel(channel.messages[channel.messages.length - 1].model);
     }
-  }, [channelId, channel, model]);
+  }, [channelId, channel]);
 
   return (
     <>
