@@ -6,7 +6,7 @@ export default function Pals() {
       <h1>Pal list</h1>
       <ul>
         <li>
-          <Link to="./live-translation">Live translation</Link>
+          <Link to="/pals/live-translation">Live translation</Link>
         </li>
       </ul>
     </div>
