@@ -32,7 +32,9 @@ const useDebounce = (callback: () => void, delay: number) => {
       clearTimeout(timeoutRef.current);
     }
 
+    // @ts-ignore
     timeoutRef.current = setTimeout(() => {
+      // @ts-ignore
       callback(...args);
     }, delay);
   };
