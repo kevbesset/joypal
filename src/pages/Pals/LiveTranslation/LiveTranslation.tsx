@@ -1,4 +1,5 @@
 import { chat } from "@/libs/services/chatService";
+import ElevenLabsAPI from "elevenlabs-ts";
 import { useEffect, useRef, useState } from "react";
 import bem from "react-bemthis";
 import { Link } from "react-router-dom";
@@ -12,9 +13,10 @@ const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 recognition.continuous = true;
 recognition.lang = "fr";
+const elevenLabs = new ElevenLabsAPI("2ff4907359d128b0df64267969e0f20c");
 
-const useDebounce = (callback, delay) => {
-  const timeoutRef = useRef(null);
+const useDebounce = (callback: () => void, delay: number) => {
+  const timeoutRef = useRef<NodeJS.Timeout>(null);
 
   useEffect(() => {
     // Cleanup the previous timeout on re-render
@@ -25,7 +27,7 @@ const useDebounce = (callback, delay) => {
     };
   }, []);
 
-  const debouncedCallback = (...args) => {
+  const debouncedCallback = (...args: unknown[]) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -53,18 +55,31 @@ function useLiveTranslation(text: string, lang = "english") {
     }
   }
 
+  async function play() {
+    const audioResponse = await elevenLabs.textToSpeech(
+      import.meta.env.VITE_ELEVENLABS_API_KEY,
+      {
+        text: output,
+      }
+    );
+    const blob = new Blob([audioResponse], { type: "audio/mpeg" }); // Assurez-vous de spécifier le type MIME correct pour votre fichier audio
+    const audioURL = URL.createObjectURL(blob);
+
+    const audio = new Audio(audioURL);
+    audio.play();
+  }
+
   async function translate() {
-    console.log("translate", { text, previousText });
     const response = await chat(
       [
         {
           role: "user",
-          content: `Important rule: Just write the same text from "text to translate" translated in ${lang}, nothing more
+          content: `Translate the following text in ${lang} with no explaination, no titles, nothing more
 
           Text to translate:
-          ${text}
+          ${text.trim()}
 
-          Here's the text you translated last time, try to be consistent (no need to re-translate it, it is just to help you):
+          Here's the text you translated last time, but do not repeat it:
           ${previousText}
           `,
         },
@@ -72,18 +87,20 @@ function useLiveTranslation(text: string, lang = "english") {
       "llama3:latest"
     );
 
-    setOutput(response.message.content);
+    setOutput((o) => (o ? o + ".\n" : "") + response.message.content);
   }
 
   useEffect(() => {
     handleTranslation();
   }, [text]);
 
-  return { output };
+  return { output, play };
 }
 
 function useVoiceRecognition() {
   const [input, setInput] = useState("");
+  const [fullInput, setFullInput] = useState("");
+  const [isListening, setIsListening] = useState(false);
 
   function start() {
     recognition.start();
@@ -92,19 +109,20 @@ function useVoiceRecognition() {
   useEffect(() => {
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = Object.values(event.results)
-        // .filter((result) => result.isFinal)
-        .map((result) => result[0].transcript)
-        .join(".\n");
+        .filter((result) => result.isFinal)
+        .map((result) => result[0].transcript);
 
-      setInput(transcript);
+      if (transcript.length) {
+        setInput(transcript[transcript.length - 1]);
+      }
     };
 
     recognition.onstart = () => {
-      console.log("recognition start");
+      setIsListening(true);
     };
 
     recognition.onend = () => {
-      console.log("recognition stop");
+      setIsListening(false);
     };
 
     return () => {
@@ -112,22 +130,38 @@ function useVoiceRecognition() {
     };
   }, []);
 
-  return { input, start };
+  useEffect(() => {
+    if (input) {
+      setFullInput((i) => i + input);
+    }
+  }, [input]);
+
+  return { input, fullInput, start, isListening };
 }
 
 export default function LiveTranslation() {
-  const { input, start } = useVoiceRecognition();
-  const { output } = useLiveTranslation(input);
+  const { input, fullInput, start, isListening } = useVoiceRecognition();
+  const { output, play } = useLiveTranslation(input);
 
   return (
     <div className={block()}>
       <Link to="..">back to pal list</Link>
       <div className={element("wrapper")}>
         <div className={element("input")}>
-          <button onClick={() => start()}>start voice recording</button>
-          {input}
+          {isListening ? (
+            <>
+              Listening...
+              <br />
+            </>
+          ) : (
+            <button onClick={() => start()}>start voice recording</button>
+          )}
+          {fullInput}
         </div>
-        <div className={element("ouput")}>{output}</div>
+        <div className={element("ouput")}>
+          <button onClick={() => play()}>play</button>
+          {output}
+        </div>
       </div>
     </div>
   );
