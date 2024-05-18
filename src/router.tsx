@@ -3,7 +3,6 @@ import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import Demo from "./pages/Demo";
 import Pals from "./pages/Pals";
-import LiveTranslation from "./pages/Pals/LiveTranslation";
 import Scenario from "./pages/Scenario";
 import Setting from "./pages/Setting";
 import Store from "./pages/Store";
@@ -21,49 +20,21 @@ const router = createBrowserRouter([
         path: "c/:channelId",
         element: <Dashboard />,
       },
-    ],
-  },
-  {
-    path: "/store",
-    element: <App />,
-    children: [
       {
-        index: true,
+        path: "store",
         element: <Store />,
       },
-    ],
-  },
-  {
-    path: "/scenario",
-    element: <App />,
-    children: [
       {
-        index: true,
+        path: "scenario",
         element: <Scenario />,
       },
-    ],
-  },
-  {
-    path: "/settings",
-    element: <App />,
-    children: [
       {
-        index: true,
+        path: "settings",
         element: <Setting />,
       },
-    ],
-  },
-  {
-    path: "/pals",
-    element: <App />,
-    children: [
       {
-        index: true,
+        path: "pals",
         element: <Pals />,
-      },
-      {
-        path: "live-translation",
-        element: <LiveTranslation />,
       },
     ],
   },

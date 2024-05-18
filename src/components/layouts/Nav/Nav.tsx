@@ -3,7 +3,7 @@ import Icon from "@/components/ui/Icon";
 import useVerticalTracer from "@/libs/hooks/useVerticalTracer";
 import { useEffect, useRef } from "react";
 import bem from "react-bemthis";
-import { Link, useMatches } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Nav.module.scss";
 import tracer from "./nav-tracer.png";
 
@@ -33,7 +33,7 @@ const menu = [
 ];
 
 export default function Nav() {
-  const matches = useMatches();
+  const location = useLocation();
   const listRef = useRef(null);
   const activeSelector = element("item", "active").split(" ").pop();
   const { styles, refresh } = useVerticalTracer(
@@ -42,9 +42,17 @@ export default function Nav() {
     -8
   );
 
+  function itemActive(item: { icon: string; to: string }) {
+    if (item.to === "/") {
+      return location.pathname === "/" || location.pathname.startsWith("/c");
+    }
+
+    return location.pathname.startsWith(item.to);
+  }
+
   useEffect(() => {
     refresh();
-  }, [matches]);
+  }, [location]);
 
   return (
     <div className={block()}>
@@ -61,7 +69,7 @@ export default function Nav() {
             <Button
               icon
               className={element("item", {
-                active: matches.find((match) => match.pathname === menuItem.to),
+                active: itemActive(menuItem),
               })}
             >
               <Icon name={menuItem.icon} />
