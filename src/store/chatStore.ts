@@ -64,6 +64,17 @@ export const chatStore = createSlice({
 
       setFromStorage("channels", state.channels);
     },
+    update: (state, action: PayloadAction<ChatChannel>) => {
+      const channelIndex = state.channels.findIndex(
+        (chan) => chan.id === action.payload.id
+      );
+
+      if (channelIndex >= 0) {
+        state.channels[channelIndex] = action.payload;
+      }
+
+      setFromStorage("channels", state.channels);
+    },
     remove: (state, action: PayloadAction<string>) => {
       state.channels = state.channels.filter(
         (chan) => chan.id !== action.payload
@@ -89,7 +100,7 @@ export const chatStore = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { remove, write, save, rename } = chatStore.actions;
+export const { remove, write, save, update, rename } = chatStore.actions;
 
 const selectChannels = (state: RootState) => state.chat.channels;
 

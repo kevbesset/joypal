@@ -22,7 +22,7 @@ export default function Chatbox({ channelId, model }: Props) {
   const location = useLocation();
 
   const scrollableView = useRef<HTMLDivElement>(null);
-  const { channel, sendMessage } = useChat(channelId);
+  const { channel, sendMessage, retry } = useChat(channelId);
 
   function scrollToBottom() {
     scrollableView.current?.scrollIntoView({
@@ -65,7 +65,7 @@ export default function Chatbox({ channelId, model }: Props) {
                   {isFirstMessageToday && (
                     <Separator>{t("chatbox.separator")}</Separator>
                   )}
-                  <Message {...message} />
+                  <Message message={message} onRetry={() => retry(message)} />
                 </Fragment>
               );
             })}

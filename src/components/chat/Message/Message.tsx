@@ -9,9 +9,12 @@ import styles from "./Message.module.scss";
 
 const { block, element } = bem(styles);
 
-type Props = ChatMessage;
+type Props = {
+  message: ChatMessage;
+  onRetry: () => void;
+};
 
-export default function Message(message: Props) {
+export default function Message({ message, onRetry }: Props) {
   const { t } = useTranslation();
 
   const messageDate = formatDate(new Date(message.created_at));
@@ -45,7 +48,7 @@ export default function Message(message: Props) {
         {message.role === "assistant" && message.done && (
           <div className={element("action")}>
             <MessageData {...message} />
-            <Button className={element("actionButton")}>
+            <Button className={element("actionButton")} onClick={onRetry}>
               <Icon name="refresh" className={element("actionIcon")} />
               <span className={element("actionInner")}>
                 {t("chatbox.message.action.redo")}

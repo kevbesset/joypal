@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store";
-import { save, selectChannel, write } from "@/store/chatStore";
+import { save, selectChannel, update, write } from "@/store/chatStore";
 import { ChatMessage } from "@/types/Chat.type";
 import { useNavigate } from "react-router-dom";
 import { uid } from "../helpers/uniqueId";
@@ -36,22 +36,14 @@ export default function useChat(channelId: string) {
     // Push user message
     dispatch(write({ channelId: channel.id, message }));
 
-    await handleMessageResponse(message);
+    await handleMessageResponse([...channel.messages, message], message.model);
   }
 
-  async function handleMessageResponse(userMessage: ChatMessage) {
-    const response = await streamingChat(
-      [...channel.messages, userMessage],
-      userMessage.model
-    );
+  async function handleMessageResponse(messages: ChatMessage[], model: string) {
+    const response = await streamingChat(messages, model);
 
     // Create message with empty content
-    const responseMessage = await createMessage(
-      "",
-      userMessage.model,
-      "assistant",
-      false
-    );
+    const responseMessage = await createMessage("", model, "assistant", false);
 
     let messageContent = "";
 
@@ -82,8 +74,25 @@ export default function useChat(channelId: string) {
     }
   }
 
+  async function retry(message: ChatMessage) {
+    const messageIndex = channel.messages.findIndex((m) => m.id === message.id);
+
+    if (messageIndex >= 0) {
+      const previousMessages = channel.messages.slice(0, messageIndex);
+      await dispatch(
+        update({
+          ...channel,
+          messages: previousMessages,
+        })
+      );
+
+      await handleMessageResponse(previousMessages, message.model);
+    }
+  }
+
   return {
     channel,
     sendMessage,
+    retry,
   };
 }
