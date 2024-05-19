@@ -1,14 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
-
 @import "sass/themes//default";
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
   min-width: 0;
-  font: inherit;
+  margin: 0;
   outline-color: color-mix(in oklch, transparent, currentColor 30%);
 }
 
@@ -58,7 +55,7 @@ body {
   background-color: var(--backgroundColor);
   color: var(--colorText);
   font-size: 1em;
-  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: normal;
   line-height: 1.5;
   font-synthesis: none;

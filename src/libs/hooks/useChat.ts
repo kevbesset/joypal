@@ -36,7 +36,20 @@ export default function useChat(channelId: string) {
     // Push user message
     dispatch(write({ channelId: channel.id, message }));
 
-    await handleMessageResponse([...channel.messages, message], message.model);
+    const messageList = [...channel.messages];
+
+    if (messageList.length === 0) {
+      messageList.push(
+        createMessage(
+          "You are Joypal, a large language model trained by Kevin Besset.\nYou write your responses using Markdown if you need to format your response.",
+          message.model,
+          "system"
+        )
+      );
+    }
+    messageList.push(message);
+
+    await handleMessageResponse(messageList, message.model);
   }
 
   async function handleMessageResponse(messages: ChatMessage[], model: string) {

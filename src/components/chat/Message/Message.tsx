@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
+import Wysiwyg from "@/components/ui/Wysiwyg";
 import { clipboardCopy } from "@/libs/helpers/clipboard";
 import { formatDate, formatTime } from "@/libs/helpers/date";
 import { ChatMessage } from "@/types/Chat.type";
@@ -20,6 +21,7 @@ export default function Message({ message, onRetry }: Props) {
   const { t } = useTranslation();
 
   const [isCopied, setIsCopied] = useState(false);
+  const [isMarkdown, setIsMarkdown] = useState(true);
   const messageDate = formatDate(new Date(message.created_at));
   const messageTime = formatTime(new Date(message.created_at));
 
@@ -30,6 +32,10 @@ export default function Message({ message, onRetry }: Props) {
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
+  }
+
+  function handleToggleCode() {
+    setIsMarkdown(!isMarkdown);
   }
 
   return (
@@ -55,10 +61,21 @@ export default function Message({ message, onRetry }: Props) {
         </small>
       </div>
       <div className={element("box")}>
-        <div className={element("content")}>{message.content}</div>
+        <div className={element("content")}>
+          {isMarkdown ? <Wysiwyg content={message.content} /> : message.content}
+        </div>
         {message.role === "assistant" && message.done && (
           <div className={element("action")}>
             <MessageData {...message} />
+            <Button
+              className={element("actionButton")}
+              onClick={handleToggleCode}
+            >
+              <Icon
+                name={isMarkdown ? "code" : "code_off"}
+                className={element("actionIcon")}
+              />
+            </Button>
             <Button className={element("actionButton")} onClick={onRetry}>
               <Icon name="refresh" className={element("actionIcon")} />
               <span className={element("actionInner")}>
