@@ -10,6 +10,7 @@ type Props = PropsWithChildren & {
   type?: "submit" | "button";
   highlight?: boolean;
   icon?: boolean;
+  disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
@@ -18,6 +19,7 @@ export default function Button({
   className,
   type,
   highlight,
+  disabled,
   icon,
   onClick,
 }: Props) {
@@ -25,11 +27,13 @@ export default function Button({
     <button
       onClick={onClick}
       type={type || "button"}
+      disabled={disabled}
       className={classNames(
         className,
         block({
           icon,
           highlight,
+          disabled,
         })
       )}
     >

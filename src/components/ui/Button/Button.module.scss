@@ -12,7 +12,7 @@
   background-color: var(--highlightColor);
   color: var(--colorText);
 
-  &:hover {
+  &:hover:not([disabled]) {
     filter: brightness(var(--brightnessHover));
   }
 
@@ -25,5 +25,9 @@
     padding: 0;
     width: 2em;
     height: 2em;
+  }
+
+  &--disabled {
+    opacity: 0.8;
   }
 }

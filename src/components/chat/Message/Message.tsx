@@ -1,7 +1,9 @@
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
+import { clipboardCopy } from "@/libs/helpers/clipboard";
 import { formatDate, formatTime } from "@/libs/helpers/date";
 import { ChatMessage } from "@/types/Chat.type";
+import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
 import MessageData from "../MessageData";
@@ -17,9 +19,18 @@ type Props = {
 export default function Message({ message, onRetry }: Props) {
   const { t } = useTranslation();
 
+  const [isCopied, setIsCopied] = useState(false);
   const messageDate = formatDate(new Date(message.created_at));
-
   const messageTime = formatTime(new Date(message.created_at));
+
+  function handleCopy() {
+    setIsCopied(true);
+    clipboardCopy(message.content);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+  }
 
   return (
     <div className={block(message.role)}>
@@ -54,10 +65,19 @@ export default function Message({ message, onRetry }: Props) {
                 {t("chatbox.message.action.redo")}
               </span>
             </Button>
-            <Button className={element("actionButton")}>
-              <Icon name="content_copy" className={element("actionIcon")} />
+            <Button
+              className={element("actionButton")}
+              disabled={isCopied}
+              onClick={handleCopy}
+            >
+              <Icon
+                name={isCopied ? "check" : "content_copy"}
+                className={element("actionIcon")}
+              />
               <span className={element("actionInner")}>
-                {t("chatbox.message.action.copy")}
+                {t(
+                  `chatbox.message.action.${isCopied ? "copy_success" : "copy"}`
+                )}
               </span>
             </Button>
           </div>
