@@ -116,9 +116,26 @@ export default function useChat(channelId: string) {
     }
   }
 
+  async function edit(message: ChatMessage) {
+    const messageIndex = channel.messages.findIndex((m) => m.id === message.id);
+
+    if (messageIndex >= 0) {
+      const previousMessages = channel.messages.slice(0, messageIndex);
+      await dispatch(
+        update({
+          ...channel,
+          messages: previousMessages,
+        })
+      );
+
+      await sendMessage(message.content, message.model);
+    }
+  }
+
   return {
     channel,
     sendMessage,
     retry,
+    edit,
   };
 }

@@ -60,9 +60,6 @@ export default function Prompt({ onSubmit }: Props) {
           <Icon name="send" />
         </Button>
       </div>
-      <Button className={element("button")}>
-        <Icon name="mic" />
-      </Button>
     </div>
   );
 }
