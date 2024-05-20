@@ -1,5 +1,7 @@
 import bem from "react-bemthis";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./App.module.scss";
 import Toolbar from "./components/layouts/Toolbar";
 
@@ -10,6 +12,7 @@ export default function App() {
     <div className={block()}>
       <Toolbar />
       <Outlet />
+      <ToastContainer />
     </div>
   );
 }

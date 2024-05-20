@@ -25,6 +25,37 @@ export default function Message({ message, onRetry }: Props) {
   const messageDate = formatDate(new Date(message.created_at));
   const messageTime = formatTime(new Date(message.created_at));
 
+  function renderRole() {
+    switch (message.role) {
+      case "user":
+        return "You";
+      case "error":
+      case "system":
+        return "System";
+      default:
+        return "Assistant";
+    }
+  }
+
+  function renderIcon() {
+    switch (message.role) {
+      case "user":
+        return (
+          <img
+            src="https://media.licdn.com/dms/image/C4E03AQGm-rwpONAatw/profile-displayphoto-shrink_400_400/0/1601377777018?e=2147483647&v=beta&t=G9A_yIODEox92NRv0f8VeEGK4XYQGPtEsFV-9e6AzXQ"
+            alt=""
+            width={32}
+            height={32}
+          />
+        );
+      case "error":
+      case "system":
+        return <Icon name="settings_alert" />;
+      default:
+        return <Icon name="pet_supplies" />;
+    }
+  }
+
   function handleCopy() {
     setIsCopied(true);
     clipboardCopy(message.content);
@@ -40,22 +71,9 @@ export default function Message({ message, onRetry }: Props) {
 
   return (
     <div className={block(message.role)}>
-      <div className={element("avatar")}>
-        {message.role === "user" ? (
-          <img
-            src="https://media.licdn.com/dms/image/C4E03AQGm-rwpONAatw/profile-displayphoto-shrink_400_400/0/1601377777018?e=2147483647&v=beta&t=G9A_yIODEox92NRv0f8VeEGK4XYQGPtEsFV-9e6AzXQ"
-            alt=""
-            width={32}
-            height={32}
-          />
-        ) : (
-          <Icon name="pet_supplies" />
-        )}
-      </div>
+      <div className={element("avatar")}>{renderIcon()}</div>
       <div className={element("info")}>
-        <div className={element("author")}>
-          {message.role === "user" ? "You" : "Assistant"}
-        </div>
+        <div className={element("author")}>{renderRole()}</div>
         <small className={element("date")}>
           {messageDate} • {messageTime}
         </small>
@@ -64,7 +82,7 @@ export default function Message({ message, onRetry }: Props) {
         <div className={element("content")}>
           {isMarkdown ? <Wysiwyg content={message.content} /> : message.content}
         </div>
-        {message.role === "assistant" && message.done && (
+        {message.role !== "user" && message.done && (
           <div className={element("action")}>
             <MessageData {...message} />
             <Button

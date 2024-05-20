@@ -41,7 +41,7 @@ export default function useChat(channelId: string) {
     if (messageList.length === 0) {
       messageList.push(
         createMessage(
-          "You are Joypal, a large language model trained by Kevin Besset.\nYou write your responses using Markdown if you need to format your response.",
+          "You are Joypal, a language model trained by Kevin Besset",
           message.model,
           "system"
         )
@@ -53,26 +53,39 @@ export default function useChat(channelId: string) {
   }
 
   async function handleMessageResponse(messages: ChatMessage[], model: string) {
-    const response = await streamingChat(messages, model);
-
     // Create message with empty content
     const responseMessage = await createMessage("", model, "assistant", false);
 
     let messageContent = "";
 
-    for await (const chunk of response) {
-      messageContent += chunk.message.content;
+    try {
+      const response = await streamingChat(messages, model);
+      for await (const chunk of response) {
+        messageContent += chunk.message.content;
 
+        dispatch(
+          write({
+            channelId: channel.id,
+            message: {
+              ...responseMessage,
+              ...chunk,
+              content: messageContent,
+              created_at: chunk.created_at
+                ? new Date(chunk.created_at).getTime()
+                : responseMessage.created_at,
+            },
+          })
+        );
+      }
+    } catch (error) {
       dispatch(
         write({
           channelId: channel.id,
           message: {
             ...responseMessage,
-            ...chunk,
-            content: messageContent,
-            created_at: chunk.created_at
-              ? new Date(chunk.created_at).getTime()
-              : responseMessage.created_at,
+            role: "error",
+            content: (error as Error).message,
+            done: true,
           },
         })
       );

@@ -7,10 +7,12 @@ export async function streamingChat(messageList: ChatMessage[], model: string) {
       // Handle Ollama by default
       return await Ollama.chat({
         model,
-        messages: messageList.map(({ role, content }) => ({
-          role,
-          content,
-        })),
+        messages: messageList
+          .filter((msg) => msg.role !== "error")
+          .map(({ role, content }) => ({
+            role,
+            content,
+          })),
         stream: true,
       });
   }

@@ -21,6 +21,11 @@
       background-color: var(--accentColor);
       color: var(--accentColorText);
     }
+
+    #{$blockSelector}--error & {
+      background-color: var(--dangerColor);
+      color: var(--dangerColorText);
+    }
   }
 
   &__info {
@@ -53,6 +58,15 @@
     #{$blockSelector}--assistant & {
       background-color: var(--highlightColor);
     }
+
+    #{$blockSelector}--error & {
+      background-color: color-mix(
+        in oklch,
+        var(--foregroundColor),
+        var(--dangerColor) 50%
+      );
+      color: var(--dangerColorText);
+    }
   }
 
   &__content {
@@ -68,6 +82,11 @@
 
   &__actionButton {
     background-color: var(--highlightEmphasisColor);
+
+    #{$blockSelector}--error & {
+      background-color: var(--dangerColor);
+      color: var(--dangerColorText);
+    }
   }
 
   &__actionInner {
