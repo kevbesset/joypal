@@ -53,51 +53,49 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --accentColor: #23c69e;
-    --accentColorLight: #e3fef7;
-    --accentColorDark: color-mix(in oklch, transparent, #10a37f 15%);
-    --accentColorText: white;
-    --accentColorLightText: #1e1f22;
+.dark {
+  --accentColor: #23c69e;
+  --accentColorLight: #e3fef7;
+  --accentColorDark: color-mix(in oklch, transparent, #10a37f 15%);
+  --accentColorText: white;
+  --accentColorLightText: #1e1f22;
 
-    // Background colors
-    --backgroundColor: #282a2e;
-    --foregroundColor: #3f424a;
-    --frontColor: #57585f;
-    --highlightColor: #1e1f22;
-    --highlightEmphasisColor: transparent;
-    --primaryColor: var(--highlightColor);
+  // Background colors
+  --backgroundColor: #282a2e;
+  --foregroundColor: #3f424a;
+  --frontColor: #57585f;
+  --highlightColor: #1e1f22;
+  --highlightEmphasisColor: transparent;
+  --primaryColor: var(--highlightColor);
 
-    // Text colors
-    --colorText: white;
+  // Text colors
+  --colorText: white;
+  --colorMuted: #ababab;
+  --colorPlaceholder: #575b65;
+
+  // Misc colors
+  --colorToolbar: var(--highlightColor);
+  --colorToolbarStroke: #2d2e30;
+  --colorStroke: transparent;
+  --colorShadow: rgba(30, 31, 34, 0.4);
+  --colorTracer: var(--highlightColor);
+  --colorInput: color-mix(in oklch, transparent, var(--foregroundColor) 15%);
+  --colorPrimaryIcon: var(--accentColor);
+  --colorNav: color-mix(in oklch, transparent, #d9d9d9 8%);
+  --colorThemeSwitcher: #64666d;
+
+  --brightnessHover: 0.9;
+
+  [data-theme="inner"] {
+    --backgroundColor: #3f424a;
+    --foregroundColor: #4b4f5b;
+    --highlightColor: #28303f;
+    --highlightEmphasisColor: #202633;
+
     --colorMuted: #ababab;
-    --colorPlaceholder: #575b65;
+    --colorPlaceholder: #a0a7bb;
 
-    // Misc colors
-    --colorToolbar: var(--highlightColor);
-    --colorToolbarStroke: #2d2e30;
-    --colorStroke: transparent;
-    --colorShadow: rgba(30, 31, 34, 0.4);
-    --colorTracer: var(--highlightColor);
-    --colorInput: color-mix(in oklch, transparent, var(--foregroundColor) 15%);
-    --colorPrimaryIcon: var(--accentColor);
-    --colorNav: color-mix(in oklch, transparent, #d9d9d9 8%);
-    --colorThemeSwitcher: #64666d;
-
-    --brightnessHover: 0.9;
-
-    [data-theme="inner"] {
-      --backgroundColor: #3f424a;
-      --foregroundColor: #4b4f5b;
-      --highlightColor: #28303f;
-      --highlightEmphasisColor: #202633;
-
-      --colorMuted: #ababab;
-      --colorPlaceholder: #a0a7bb;
-
-      --colorStroke: #4b4f5b;
-      --colorInput: var(--foregroundColor);
-    }
+    --colorStroke: #4b4f5b;
+    --colorInput: var(--foregroundColor);
   }
 }

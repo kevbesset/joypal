@@ -35,6 +35,7 @@ export default function Prompt({ onSubmit }: Props) {
 
   function handleSubmit(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (!event.shiftKey && ["Enter", "NumpadEnter"].includes(event.code)) {
+      event.preventDefault();
       sendSubmitEvent();
     }
   }
@@ -51,6 +52,7 @@ export default function Prompt({ onSubmit }: Props) {
           placeholder={t("chatbox.prompt.placeholder")}
           className={element("input")}
           value={promptValue}
+          rows={1}
           onKeyDown={handleSubmit}
           onChange={handleInputChange}
         />

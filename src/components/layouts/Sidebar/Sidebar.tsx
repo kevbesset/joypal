@@ -28,9 +28,9 @@ export default function Sidebar() {
       label: t("chatbox.sidebar.tabs.chats"),
     },
     {
-      key: "pals",
-      icon: "diversity_1",
-      label: t("chatbox.sidebar.tabs.pals"),
+      key: "templates",
+      icon: "edit_note",
+      label: t("chatbox.sidebar.tabs.templates"),
     },
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].key);

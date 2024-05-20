@@ -107,6 +107,15 @@ export default function Message({ message, onRetry, onEdit }: Props) {
           {message.done && (
             <div className={element("action")}>
               <MessageData {...message} />
+              <Button
+                className={element("actionButton")}
+                onClick={handleToggleCode}
+              >
+                <Icon
+                  name={isMarkdown ? "code" : "code_off"}
+                  className={element("actionIcon")}
+                />
+              </Button>
               {message.role === "user" ? (
                 <>
                   <Button
@@ -121,15 +130,6 @@ export default function Message({ message, onRetry, onEdit }: Props) {
                 </>
               ) : (
                 <>
-                  <Button
-                    className={element("actionButton")}
-                    onClick={handleToggleCode}
-                  >
-                    <Icon
-                      name={isMarkdown ? "code" : "code_off"}
-                      className={element("actionIcon")}
-                    />
-                  </Button>
                   <Button className={element("actionButton")} onClick={onRetry}>
                     <Icon name="refresh" className={element("actionIcon")} />
                     <span className={element("actionInner")}>

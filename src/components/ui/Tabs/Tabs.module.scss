@@ -38,7 +38,7 @@
     height: calc(100% - 0.5em);
     background-color: var(--colorTracer);
     border-radius: 0.375em;
-    transition: all var(--transition);
+    transition: width var(--transition), transform var(--transition);
     box-shadow: 0 1.25em 1em -0.5em var(--colorShadow);
   }
 

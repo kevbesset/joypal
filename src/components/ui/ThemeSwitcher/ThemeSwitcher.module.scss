@@ -4,6 +4,7 @@
   border-radius: 0.75em;
   background-color: var(--foregroundColor);
   padding: 0.375em;
+  cursor: pointer;
 
   &__list {
     position: relative;
@@ -24,7 +25,6 @@
     border: none;
     box-shadow: none;
     border-radius: 0.5em;
-    cursor: pointer;
     text-transform: uppercase;
     color: var(--colorText);
 

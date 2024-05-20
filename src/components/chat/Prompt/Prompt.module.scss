@@ -16,9 +16,9 @@
     border: none;
     box-shadow: none;
     border-radius: 0.5em;
-    height: 3.5em;
     padding: 1.25em 3.5em;
     padding-left: 1.25em;
+    max-height: 60dvh;
 
     &::placeholder {
       opacity: 1;
