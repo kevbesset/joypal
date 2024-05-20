@@ -9,6 +9,7 @@
   }
 
   &__input {
+    font: inherit;
     width: 100%;
     background-color: var(--colorInput);
     color: var(--colorText);

@@ -1,6 +1,5 @@
-import Button from "@/components/ui/Button";
-import Icon from "@/components/ui/Icon";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import useAutosizeTextArea from "@/libs/hooks/useAutosizeTextarea";
+import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
 import styles from "./Prompt.module.scss";
@@ -13,9 +12,12 @@ type Props = {
 
 export default function Prompt({ onSubmit }: Props) {
   const { t } = useTranslation();
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [promptValue, setPromptValue] = useState("");
 
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+  useAutosizeTextArea(textAreaRef.current, promptValue);
+
+  function handleInputChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setPromptValue(event.target.value);
   }
 
@@ -31,7 +33,7 @@ export default function Prompt({ onSubmit }: Props) {
     }
   }
 
-  function handleSubmit(event: KeyboardEvent<HTMLInputElement>) {
+  function handleSubmit(event: KeyboardEvent<HTMLTextAreaElement>) {
     if (!event.shiftKey && ["Enter", "NumpadEnter"].includes(event.code)) {
       sendSubmitEvent();
     }
@@ -40,8 +42,8 @@ export default function Prompt({ onSubmit }: Props) {
   return (
     <div className={block()}>
       <div className={element("inner")}>
-        <input
-          type="text"
+        <textarea
+          ref={textAreaRef}
           name="prompt"
           id="prompt"
           autoFocus
@@ -52,13 +54,6 @@ export default function Prompt({ onSubmit }: Props) {
           onKeyDown={handleSubmit}
           onChange={handleInputChange}
         />
-        <Button
-          icon
-          className={element("send")}
-          onClick={() => sendSubmitEvent()}
-        >
-          <Icon name="send" />
-        </Button>
       </div>
     </div>
   );
