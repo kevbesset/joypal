@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Dashboard from "./pages/Dashboard";
-import Demo from "./pages/Demo";
 import Error from "./pages/Error";
 import Pals from "./pages/Pals";
 import LiveTranslation from "./pages/Pals/LiveTranslation";
@@ -44,10 +43,6 @@ const router = createBrowserRouter([
         element: <LiveTranslation />,
       },
     ],
-  },
-  {
-    path: "/demo",
-    element: <Demo />,
   },
 ]);
 
