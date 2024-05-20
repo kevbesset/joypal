@@ -62,8 +62,8 @@
     #{$blockSelector}--error & {
       background-color: color-mix(
         in oklch,
-        var(--foregroundColor),
-        var(--dangerColor) 50%
+        var(--dangerColorText),
+        var(--dangerColor) 70%
       );
       color: var(--dangerColorText);
     }
@@ -81,7 +81,15 @@
   }
 
   &__actionButton {
-    background-color: var(--highlightEmphasisColor);
+    background-color: color-mix(
+      in oklch,
+      currentColor,
+      var(--backgroundColor) 95%
+    );
+
+    #{$blockSelector}--assistant & {
+      background-color: var(--highlightEmphasisColor);
+    }
 
     #{$blockSelector}--error & {
       background-color: var(--dangerColor);

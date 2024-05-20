@@ -69,6 +69,10 @@ export default function Message({ message, onRetry }: Props) {
     setIsMarkdown(!isMarkdown);
   }
 
+  function handleEdit() {
+    //
+  }
+
   return (
     <div className={block(message.role)}>
       <div className={element("avatar")}>{renderIcon()}</div>
@@ -82,39 +86,57 @@ export default function Message({ message, onRetry }: Props) {
         <div className={element("content")}>
           {isMarkdown ? <Wysiwyg content={message.content} /> : message.content}
         </div>
-        {message.role !== "user" && message.done && (
+        {message.done && (
           <div className={element("action")}>
             <MessageData {...message} />
-            <Button
-              className={element("actionButton")}
-              onClick={handleToggleCode}
-            >
-              <Icon
-                name={isMarkdown ? "code" : "code_off"}
-                className={element("actionIcon")}
-              />
-            </Button>
-            <Button className={element("actionButton")} onClick={onRetry}>
-              <Icon name="refresh" className={element("actionIcon")} />
-              <span className={element("actionInner")}>
-                {t("chatbox.message.action.redo")}
-              </span>
-            </Button>
-            <Button
-              className={element("actionButton")}
-              disabled={isCopied}
-              onClick={handleCopy}
-            >
-              <Icon
-                name={isCopied ? "check" : "content_copy"}
-                className={element("actionIcon")}
-              />
-              <span className={element("actionInner")}>
-                {t(
-                  `chatbox.message.action.${isCopied ? "copy_success" : "copy"}`
-                )}
-              </span>
-            </Button>
+            {message.role === "user" ? (
+              <>
+                <Button
+                  className={element("actionButton")}
+                  onClick={handleEdit}
+                >
+                  <Icon name="edit" className={element("actionIcon")} />
+                  <span className={element("actionInner")}>
+                    {t("chatbox.message.action.edit")}
+                  </span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  className={element("actionButton")}
+                  onClick={handleToggleCode}
+                >
+                  <Icon
+                    name={isMarkdown ? "code" : "code_off"}
+                    className={element("actionIcon")}
+                  />
+                </Button>
+                <Button className={element("actionButton")} onClick={onRetry}>
+                  <Icon name="refresh" className={element("actionIcon")} />
+                  <span className={element("actionInner")}>
+                    {t("chatbox.message.action.redo")}
+                  </span>
+                </Button>
+                <Button
+                  className={element("actionButton")}
+                  disabled={isCopied}
+                  onClick={handleCopy}
+                >
+                  <Icon
+                    name={isCopied ? "check" : "content_copy"}
+                    className={element("actionIcon")}
+                  />
+                  <span className={element("actionInner")}>
+                    {t(
+                      `chatbox.message.action.${
+                        isCopied ? "copy_success" : "copy"
+                      }`
+                    )}
+                  </span>
+                </Button>
+              </>
+            )}
           </div>
         )}
       </div>

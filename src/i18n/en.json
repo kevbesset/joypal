@@ -16,7 +16,8 @@
       "action": {
         "copy": "Copy",
         "copy_success": "Copied",
-        "redo": "Generate response"
+        "redo": "Generate response",
+        "edit": "Edit"
       }
     }
   }

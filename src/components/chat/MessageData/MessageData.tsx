@@ -6,9 +6,8 @@ import styles from "./MessageData.module.scss";
 const { block, element } = bem(styles);
 
 export default function MessageData(message: ChatMessage) {
-  if (message.role === "user") return "";
   return (
-    <div className={block()}>
+    <div className={block(message.role)}>
       <dl className={element("item")}>
         <dt className={element("label")}>
           <Icon name="language" />
