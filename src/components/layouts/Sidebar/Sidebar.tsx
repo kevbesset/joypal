@@ -48,7 +48,7 @@ export default function Sidebar() {
           </Button>
         </Link>
         <Button icon>
-          <Icon name="more_horiz" />
+          <Icon name="download" />
         </Button>
       </div>
       <div className={element("tabs")}>

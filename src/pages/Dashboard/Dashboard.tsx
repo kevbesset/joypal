@@ -15,11 +15,15 @@ const { block, element } = bem(styles);
 export default function Dashboard() {
   const params = useParams();
   const channelId = params.channelId || "new";
-  const { channel } = useChat(channelId);
+  const { channel, download } = useChat(channelId);
   const { models, model, setModel } = useModel();
 
   function handleModelChange(newModel: string) {
     setModel(newModel);
+  }
+
+  function handleDownloadChannel() {
+    download();
   }
 
   useEffect(() => {
@@ -44,9 +48,11 @@ export default function Dashboard() {
               models={models}
             />
           </div>
-          <Button icon>
-            <Icon name="upload" />
-          </Button>
+          {channel && !!channel.messages.length && (
+            <Button icon onClick={handleDownloadChannel}>
+              <Icon name="upload" />
+            </Button>
+          )}
         </div>
         <main data-theme="inner" className={element("body")}>
           <Chatbox key={channelId} model={model} channelId={channelId} />

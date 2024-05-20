@@ -132,10 +132,30 @@ export default function useChat(channelId: string) {
     }
   }
 
+  async function download() {
+    const json = JSON.stringify(channel, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    // Créer un élément <a> pour télécharger le fichier
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `channel-${channel.id}.json`;
+
+    // Ajouter l'élément <a> au document et cliquer dessus pour démarrer le téléchargement
+    document.body.appendChild(a);
+    a.click();
+
+    // Nettoyer après le téléchargement
+    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
   return {
     channel,
     sendMessage,
     retry,
     edit,
+    download,
   };
 }
