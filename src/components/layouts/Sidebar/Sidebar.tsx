@@ -1,4 +1,5 @@
 import ChannelList from "@/components/chat/ChannelList";
+import UploadChat from "@/components/chat/UploadChat";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Search from "@/components/ui/Search";
@@ -47,9 +48,7 @@ export default function Sidebar() {
             <Icon name="add" />
           </Button>
         </Link>
-        <Button icon>
-          <Icon name="download" />
-        </Button>
+        <UploadChat />
       </div>
       <div className={element("tabs")}>
         <Tabs tabs={tabs} active={activeTab} onTabChange={setActiveTab} />

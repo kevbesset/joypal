@@ -1,4 +1,5 @@
 import { getFromStorage, setFromStorage } from "@/libs/helpers/storage";
+import { uid } from "@/libs/helpers/uniqueId";
 import { RootState } from "@/store";
 import { ChatChannel, ChatMessage } from "@/types/Chat.type";
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
@@ -96,11 +97,27 @@ export const chatStore = createSlice({
 
       setFromStorage("channels", state.channels);
     },
+    create: (state, action: PayloadAction<ChatChannel>) => {
+      let channelId = action.payload.id;
+
+      const channel = state.channels.find((chan) => chan.id === channelId);
+      if (channel) {
+        channelId = `c${uid()}`;
+      }
+
+      state.channels.push({
+        ...action.payload,
+        id: channelId,
+      });
+
+      setFromStorage("channels", state.channels);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { remove, write, save, update, rename } = chatStore.actions;
+export const { remove, write, save, update, rename, create } =
+  chatStore.actions;
 
 const selectChannels = (state: RootState) => state.chat.channels;
 

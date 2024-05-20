@@ -18,7 +18,7 @@ const initialState: OrganizerState = {
 };
 
 export const organizerStore = createSlice({
-  name: "chat",
+  name: "organizer",
   initialState,
   reducers: {
     create: (state) => {
