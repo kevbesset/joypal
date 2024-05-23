@@ -58,8 +58,8 @@ export default function Chatbox({ channelId, model }: Props) {
                 messageIndex > 0 &&
                 !dateIsToday(
                   new Date(channel.messages[messageIndex - 1].created_at)
-                );
-
+                ) &&
+                dateIsToday(new Date(message.created_at));
               return (
                 <Fragment key={messageIndex}>
                   {isFirstMessageToday && (
