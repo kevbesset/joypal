@@ -15,7 +15,7 @@
     "message": {
       "action": {
         "copy": "Copy",
-        "copy_success": "Copied",
+        "copySuccess": "Copied",
         "redo": "Generate response",
         "edit": "Edit"
       }

@@ -148,7 +148,7 @@ export default function Message({ message, onRetry, onEdit }: Props) {
                     <span className={element("actionInner")}>
                       {t(
                         `chatbox.message.action.${
-                          isCopied ? "copy_success" : "copy"
+                          isCopied ? "copySuccess" : "copy"
                         }`
                       )}
                     </span>
