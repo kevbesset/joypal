@@ -1,4 +1,4 @@
-import { Model } from "@/types/Model.type";
+import useModel from "@/libs/hooks/useModel";
 import bem from "react-bemthis";
 import Select, { SingleValue } from "react-select";
 import styles from "./ModelSelect.module.scss";
@@ -15,16 +15,12 @@ type ClassState = {
   isSelected?: boolean;
 };
 
-type Props = {
-  value?: string;
-  onModelSelect: (model: string) => void;
-  models?: Model[];
-};
+export default function ModelSelect() {
+  const { models, model: value, setModel } = useModel();
 
-export default function ModelSelect({ value, onModelSelect, models }: Props) {
   function onSelectChange(option: SingleValue<Option>) {
     if (option) {
-      onModelSelect(option.value);
+      setModel(option.value);
     }
   }
 

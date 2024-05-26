@@ -1,9 +1,70 @@
 .prompt-enhancer {
+  font: inherit;
+  border: none;
+  border-radius: 0.5em;
+  box-shadow: none;
+  cursor: pointer;
+  appearance: button;
+  display: inline-flex;
+  gap: 0.25em;
+  align-items: center;
+  justify-content: center;
   background-color: var(--backgroundColor);
+  color: var(--colorText);
+  padding: 0;
+  width: 2em;
+  height: 2em;
 
   &:hover:not([disabled]) {
     filter: none;
     background-color: var(--colorText);
     color: var(--backgroundColor);
+  }
+
+  &__dropdown {
+    background-color: var(--backgroundColor);
+    border-radius: 0.5em;
+    box-shadow: 0 0 1em -0.5em var(--colorShadow);
+    padding: 0.25em;
+    max-height: 20dvh;
+    overflow: auto;
+  }
+
+  &__item {
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+    border-radius: 0.25em;
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: space-between;
+
+    &:focus:not(&--active):not([aria-disabled]),
+    &:hover:not(&--active):not([aria-disabled]) {
+      background-color: var(--foregroundColor);
+      outline: none;
+      border-radius: 0.25em;
+    }
+
+    &--active {
+      background-color: var(--accentColor);
+      color: var(--accentColorText);
+    }
+  }
+
+  &__label {
+    flex: 1;
+  }
+
+  &__icon {
+    transform: translate3d(50%, 0, 0);
+    color: var(--placeholderColor);
+  }
+
+  &__separator {
+    height: 1px;
+    margin: 0.5em 0;
+    width: 100%;
+    background-color: var(--foregroundColor);
   }
 }

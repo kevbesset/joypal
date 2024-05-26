@@ -1,6 +1,5 @@
 import Chatbox from "@/components/chat/Chatbox";
 import Sidebar from "@/components/layouts/Sidebar";
-import ModelSelect from "@/components/models/ModelSelect";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import useChat from "@/libs/hooks/useChat";
@@ -18,11 +17,7 @@ export default function Dashboard() {
   const params = useParams();
   const channelId = params.channelId || "new";
   const { channel, download } = useChat(channelId);
-  const { models, model, setModel } = useModel();
-
-  function handleModelChange(newModel: string) {
-    setModel(newModel);
-  }
+  const { model, setModel } = useModel();
 
   function handleDownloadChannel() {
     download();
@@ -47,11 +42,6 @@ export default function Dashboard() {
             {channel.title || t("chatbox.sidebar.newChat")}
           </div>
           <div className={element("action")}>
-            <ModelSelect
-              value={model}
-              onModelSelect={handleModelChange}
-              models={models}
-            />
             {channel && !!channel.messages.length && (
               <Button icon onClick={handleDownloadChannel}>
                 <Icon name="upload" />
