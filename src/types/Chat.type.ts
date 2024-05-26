@@ -29,3 +29,10 @@ export type ChatChannelOrganizer = {
   channelId: string;
   folderId: string;
 };
+
+export type RTCCPrompt = {
+  role?: string;
+  task: string;
+  context?: string;
+  more?: string;
+};

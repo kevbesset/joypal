@@ -9,6 +9,7 @@
       "newChat": "New Chat"
     },
     "prompt": {
+      "title": "What can I do for you ?",
       "placeholder": "Type here your fabulous message..."
     },
     "separator": "Today",

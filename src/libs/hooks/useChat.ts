@@ -38,15 +38,6 @@ export default function useChat(channelId: string) {
 
     const messageList = [...channel.messages];
 
-    if (messageList.length === 0) {
-      messageList.push(
-        createMessage(
-          "You are Joypal, a language model trained by Kevin Besset",
-          message.model,
-          "system"
-        )
-      );
-    }
     messageList.push(message);
 
     await handleMessageResponse(messageList, message.model);

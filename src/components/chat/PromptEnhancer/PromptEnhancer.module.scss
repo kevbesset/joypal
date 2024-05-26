@@ -1,0 +1,9 @@
+.prompt-enhancer {
+  background-color: var(--backgroundColor);
+
+  &:hover:not([disabled]) {
+    filter: none;
+    background-color: var(--colorText);
+    color: var(--backgroundColor);
+  }
+}

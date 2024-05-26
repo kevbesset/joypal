@@ -12,6 +12,8 @@ type Props = PropsWithChildren & {
   icon?: boolean;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  onMouseEnter?: MouseEventHandler<HTMLButtonElement>;
+  onMouseLeave?: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function Button({
@@ -22,10 +24,14 @@ export default function Button({
   disabled,
   icon,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
 }: Props) {
   return (
     <button
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       type={type || "button"}
       disabled={disabled}
       className={classNames(

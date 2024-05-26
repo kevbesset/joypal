@@ -76,7 +76,10 @@ export default function Chatbox({ channelId, model }: Props) {
         </div>
       </div>
       <footer className={element("footer")}>
-        <Prompt onSubmit={handlePromptSubmit} />
+        <Prompt
+          onSubmit={handlePromptSubmit}
+          isNew={!channel.messages?.length}
+        />
       </footer>
     </div>
   );

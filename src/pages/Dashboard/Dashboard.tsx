@@ -7,12 +7,14 @@ import useChat from "@/libs/hooks/useChat";
 import useModel from "@/libs/hooks/useModel";
 import { useEffect } from "react";
 import bem from "react-bemthis";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import styles from "./Dashboard.module.scss";
 
 const { block, element } = bem(styles);
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const params = useParams();
   const channelId = params.channelId || "new";
   const { channel, download } = useChat(channelId);
@@ -42,17 +44,20 @@ export default function Dashboard() {
       <div className={block()}>
         <div className={element("header")}>
           <div className={element("title")}>
+            {channel.title || t("chatbox.sidebar.newChat")}
+          </div>
+          <div className={element("action")}>
             <ModelSelect
               value={model}
               onModelSelect={handleModelChange}
               models={models}
             />
+            {channel && !!channel.messages.length && (
+              <Button icon onClick={handleDownloadChannel}>
+                <Icon name="upload" />
+              </Button>
+            )}
           </div>
-          {channel && !!channel.messages.length && (
-            <Button icon onClick={handleDownloadChannel}>
-              <Icon name="upload" />
-            </Button>
-          )}
         </div>
         <main data-theme="inner" className={element("body")}>
           <Chatbox key={channelId} model={model} channelId={channelId} />

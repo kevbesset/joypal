@@ -10,6 +10,21 @@
     justify-content: space-between;
   }
 
+  &__title {
+    padding-left: 1em;
+    font-weight: bold;
+    max-width: 50%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__action {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+  }
+
   &__body {
     border-radius: 0.5em;
     background-color: var(--backgroundColor);
