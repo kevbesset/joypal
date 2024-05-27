@@ -10,7 +10,13 @@
     },
     "prompt": {
       "title": "What can I do for you ?",
-      "placeholder": "Type here your fabulous message..."
+      "placeholder": "Type here your fabulous message...",
+      "enhancer": {
+        "enableSuperPrompt": "Enable super prompt",
+        "disableSuperPrompt": "Disable super prompt",
+        "changeModel": "Change model",
+        "moreModel": "Download other models"
+      }
     },
     "separator": "Today",
     "message": {

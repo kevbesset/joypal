@@ -30,7 +30,7 @@ export type ChatChannelOrganizer = {
   folderId: string;
 };
 
-export type RTCCPrompt = {
+export type RTCMPrompt = {
   role?: string;
   task: string;
   context?: string;
