@@ -1,4 +1,6 @@
 .prompt-enhancer {
+  $blockSelector: &;
+
   font: inherit;
   border: none;
   border-radius: 0.5em;
@@ -59,6 +61,21 @@
   &__icon {
     transform: translate3d(50%, 0, 0);
     color: var(--placeholderColor);
+  }
+
+  &__toggle {
+    &--active {
+      color: var(--accentColor);
+    }
+  }
+
+  &__size {
+    font-size: 0.625em;
+    color: var(--colorMuted);
+
+    #{$blockSelector}__item--active & {
+      color: var(--accentColorText);
+    }
   }
 
   &__separator {

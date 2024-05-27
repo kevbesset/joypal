@@ -1,4 +1,5 @@
 import Icon from "@/components/ui/Icon";
+import { formatSize } from "@/libs/helpers/number";
 import useModel from "@/libs/hooks/useModel";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import classNames from "classnames";
@@ -57,7 +58,7 @@ export default function PromptEnhancer({
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           align="start"
-          sideOffset={8}
+          sideOffset={16}
           className={element("dropdown")}
         >
           {isNew ? (
@@ -66,7 +67,12 @@ export default function PromptEnhancer({
                 className={element("item")}
                 onClick={onSuperPromptToggle}
               >
-                <Icon name={superPromptEnabled ? "rocket" : "rocket_launch"} />
+                <Icon
+                  name={superPromptEnabled ? "toggle_on" : "toggle_off"}
+                  className={element("toggle", {
+                    active: superPromptEnabled,
+                  })}
+                />
                 <span className={element("label")}>
                   {t(
                     `chatbox.prompt.enhancer.${
@@ -119,7 +125,12 @@ export default function PromptEnhancer({
                   })}
                   onClick={() => setModel(m.name)}
                 >
-                  {m.name}
+                  <span className={element("label")}>{m.name}</span>
+                  {m.size && (
+                    <span className={element("size")}>
+                      {formatSize(m.size)}GB
+                    </span>
+                  )}
                 </DropdownMenu.Item>
               ))}
               <DropdownMenu.Separator className={element("separator")} />
