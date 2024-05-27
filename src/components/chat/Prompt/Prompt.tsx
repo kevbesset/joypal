@@ -16,16 +16,11 @@ export default function Prompt({ onSubmit, isNew }: Props) {
   const { t } = useTranslation();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [promptValue, setPromptValue] = useState("");
-  const [superPrompt, setSuperPrompt] = useState(isNew);
 
   useAutosizeTextArea(textAreaRef.current, promptValue);
 
   function handleInputChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setPromptValue(event.target.value);
-  }
-
-  function handleSuperPromptToggle() {
-    setSuperPrompt(!superPrompt);
   }
 
   function clearPrompt() {
@@ -52,16 +47,11 @@ export default function Prompt({ onSubmit, isNew }: Props) {
       {isNew && (
         <>
           <div className={element("title")}>{t("chatbox.prompt.title")}</div>
-          {superPrompt && <div className={element("actions")}>actions</div>}
+          {isNew && <div className={element("actions")}>+ Add role</div>}
         </>
       )}
       <div className={element("field")}>
-        <PromptEnhancer
-          className={element("magicButton")}
-          isNew={isNew}
-          superPromptEnabled={superPrompt}
-          onSuperPromptToggle={handleSuperPromptToggle}
-        />
+        <PromptEnhancer className={element("magicButton")} />
         <textarea
           ref={textAreaRef}
           name="prompt"

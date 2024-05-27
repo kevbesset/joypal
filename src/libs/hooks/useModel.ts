@@ -13,7 +13,6 @@ export default function useModel() {
     // Get models from Ollama
     const ollamaList = await ollama.list();
     if (ollamaList.models) {
-      console.log(ollamaList.models);
       dispatch(populate(ollamaList.models));
     }
   }
