@@ -13,9 +13,9 @@
   justify-content: center;
   background-color: var(--backgroundColor);
   color: var(--colorText);
-  padding: 0;
-  width: 2em;
+  min-width: 2em;
   height: 2em;
+  padding: 0.25em 0.25em;
 
   &:hover:not([disabled]) {
     filter: none;
@@ -30,6 +30,20 @@
     padding: 0.25em;
     max-height: 20dvh;
     overflow: auto;
+  }
+
+  &__currentModel {
+    display: none;
+    font-size: 0.75em;
+
+    #{$blockSelector}:hover & {
+      display: block;
+      padding-right: 0.25em;
+    }
+
+    &--new {
+      display: none;
+    }
   }
 
   &__item {

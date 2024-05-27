@@ -53,6 +53,13 @@ export default function PromptEnhancer({
             }
             fill={magicButtonHover}
           />
+          <code
+            className={element("currentModel", {
+              new: isNew,
+            })}
+          >
+            {model}
+          </code>
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
