@@ -1,9 +1,9 @@
 import Button from "@/components/ui/Button";
+import CopyButton from "@/components/ui/Button/CopyButton";
 import Icon from "@/components/ui/Icon";
 import Wysiwyg from "@/components/ui/Wysiwyg";
-import { clipboardCopy } from "@/libs/helpers/clipboard";
 import { formatDate, formatTime } from "@/libs/helpers/date";
-import { ChatMessage } from "@/types/Chat.type";
+import { ChatMessage, RTCPrompt } from "@/types/Chat.type";
 import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
@@ -22,11 +22,14 @@ type Props = {
 export default function Message({ message, onRetry, onEdit }: Props) {
   const { t } = useTranslation();
 
-  const [isCopied, setIsCopied] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isMarkdown, setIsMarkdown] = useState(true);
   const messageDate = formatDate(new Date(message.created_at));
   const messageTime = formatTime(new Date(message.created_at));
+
+  const isSystemMessage = message.role === "system";
+  const isUserMessage = message.role === "user";
+  const isAIMessage = message.role === "assistant";
 
   function renderRole() {
     switch (message.role) {
@@ -51,21 +54,13 @@ export default function Message({ message, onRetry, onEdit }: Props) {
             height={32}
           />
         );
-      case "error":
       case "system":
+        return "🧢";
+      case "error":
         return <Icon name="settings_alert" />;
       default:
         return <Icon name="pet_supplies" />;
     }
-  }
-
-  function handleCopy() {
-    setIsCopied(true);
-    clipboardCopy(message.content);
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
   }
 
   function handleToggleCode() {
@@ -76,10 +71,10 @@ export default function Message({ message, onRetry, onEdit }: Props) {
     setIsEdit(true);
   }
 
-  function handleEditSubmit(content: string) {
+  function handleEditSubmit(prompt: RTCPrompt) {
     onEdit({
       ...message,
-      content,
+      content: prompt.task,
     });
     setIsEdit(false);
   }
@@ -107,16 +102,18 @@ export default function Message({ message, onRetry, onEdit }: Props) {
           {message.done && (
             <div className={element("action")}>
               <MessageData {...message} />
-              <Button
-                className={element("actionButton")}
-                onClick={handleToggleCode}
-              >
-                <Icon
-                  name={isMarkdown ? "code" : "code_off"}
-                  className={element("actionIcon")}
-                />
-              </Button>
-              {message.role === "user" ? (
+              {!isSystemMessage && (
+                <Button
+                  className={element("actionButton")}
+                  onClick={handleToggleCode}
+                >
+                  <Icon
+                    name={isMarkdown ? "code" : "code_off"}
+                    className={element("actionIcon")}
+                  />
+                </Button>
+              )}
+              {isUserMessage && (
                 <>
                   <Button
                     className={element("actionButton")}
@@ -128,33 +125,21 @@ export default function Message({ message, onRetry, onEdit }: Props) {
                     </span>
                   </Button>
                 </>
-              ) : (
-                <>
-                  <Button className={element("actionButton")} onClick={onRetry}>
-                    <Icon name="refresh" className={element("actionIcon")} />
-                    <span className={element("actionInner")}>
-                      {t("chatbox.message.action.redo")}
-                    </span>
-                  </Button>
-                  <Button
-                    className={element("actionButton")}
-                    disabled={isCopied}
-                    onClick={handleCopy}
-                  >
-                    <Icon
-                      name={isCopied ? "check" : "content_copy"}
-                      className={element("actionIcon")}
-                    />
-                    <span className={element("actionInner")}>
-                      {t(
-                        `chatbox.message.action.${
-                          isCopied ? "copySuccess" : "copy"
-                        }`
-                      )}
-                    </span>
-                  </Button>
-                </>
               )}
+              {isAIMessage && (
+                <Button className={element("actionButton")} onClick={onRetry}>
+                  <Icon name="refresh" className={element("actionIcon")} />
+                  <span className={element("actionInner")}>
+                    {t("chatbox.message.action.redo")}
+                  </span>
+                </Button>
+              )}
+              <CopyButton
+                copyMessage={message.content}
+                className={element("actionButton")}
+                iconClassName={element("actionIcon")}
+                labelClassName={element("actionInner")}
+              />
             </div>
           )}
         </div>

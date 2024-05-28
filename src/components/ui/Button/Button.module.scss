@@ -22,13 +22,22 @@
     color: var(--accentColorText);
   }
 
+  &--secondary {
+    background-color: var(--foregroundColor);
+  }
+
   &--icon {
     padding: 0;
     width: 2em;
     height: 2em;
   }
 
+  &--rounded {
+    border-radius: 99em;
+  }
+
   &--disabled {
     opacity: 0.8;
+    cursor: not-allowed;
   }
 }

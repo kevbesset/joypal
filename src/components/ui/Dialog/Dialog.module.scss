@@ -1,0 +1,51 @@
+.dialog {
+  font: inherit;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--colorShadow);
+  backdrop-filter: blur(0.25em);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+
+  &__inner {
+    position: relative;
+    border-radius: 0.5em;
+    background-color: var(--backgroundColor);
+    color: var(--colorText);
+    box-shadow: 0 0 1em -0.5em var(--colorShadow);
+    min-width: 50%;
+    width: 720px;
+    display: inline-block;
+    max-width: calc(100% - 2em);
+    min-height: 50dvh;
+    padding: 2em 1.5em 2.75em;
+  }
+
+  &__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    padding: 0;
+    font-size: 1.25em;
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 1.25em;
+    margin-bottom: 0.75rem;
+  }
+
+  &__subtitle {
+    font-size: 0.75em;
+    margin-bottom: 2.75rem;
+  }
+}

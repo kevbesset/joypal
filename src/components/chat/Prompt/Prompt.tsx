@@ -1,14 +1,19 @@
+import Button from "@/components/ui/Button";
+import Icon from "@/components/ui/Icon";
 import useAutosizeTextArea from "@/libs/hooks/useAutosizeTextarea";
-import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import { RTCPrompt } from "@/types/Chat.type";
+import { useRef, useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
 import PromptEnhancer from "../PromptEnhancer";
+import PromptRole from "../PromptEnhancer/PromptRole";
+import Textarea from "../Textarea";
 import styles from "./Prompt.module.scss";
 
 const { block, element } = bem(styles);
 
 type Props = {
-  onSubmit: (prompt: string) => void;
+  onSubmit: (prompt: RTCPrompt) => void;
   isNew?: boolean;
 };
 
@@ -16,12 +21,9 @@ export default function Prompt({ onSubmit, isNew }: Props) {
   const { t } = useTranslation();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [promptValue, setPromptValue] = useState("");
+  const [promptRole, setPromptRole] = useState<string>();
 
   useAutosizeTextArea(textAreaRef.current, promptValue);
-
-  function handleInputChange(event: ChangeEvent<HTMLTextAreaElement>) {
-    setPromptValue(event.target.value);
-  }
 
   function clearPrompt() {
     setPromptValue("");
@@ -31,14 +33,10 @@ export default function Prompt({ onSubmit, isNew }: Props) {
     clearPrompt();
 
     if (promptValue) {
-      onSubmit(promptValue);
-    }
-  }
-
-  function handleSubmit(event: KeyboardEvent<HTMLTextAreaElement>) {
-    if (!event.shiftKey && ["Enter", "NumpadEnter"].includes(event.code)) {
-      event.preventDefault();
-      sendSubmitEvent();
+      onSubmit({
+        role: promptRole,
+        task: promptValue,
+      });
     }
   }
 
@@ -47,23 +45,28 @@ export default function Prompt({ onSubmit, isNew }: Props) {
       {isNew && (
         <>
           <div className={element("title")}>{t("chatbox.prompt.title")}</div>
-          {isNew && <div className={element("actions")}>+ Add role</div>}
+          {isNew && (
+            <div className={element("action")}>
+              <PromptRole onSubmit={setPromptRole} />
+              <Button className={element("actionButton")}>
+                <Icon name="edit_note" className={element("actionIcon")} />
+                <span className={element("actionLabel")}>
+                  {t("chatbox.prompt.actions.template")}
+                </span>
+              </Button>
+            </div>
+          )}
         </>
       )}
       <div className={element("field")}>
         <PromptEnhancer className={element("magicButton")} />
-        <textarea
-          ref={textAreaRef}
+        <Textarea
           name="prompt"
-          id="prompt"
-          autoFocus
-          autoComplete="off"
+          value={promptValue}
+          onChange={setPromptValue}
+          onSubmit={sendSubmitEvent}
           placeholder={t("chatbox.prompt.placeholder")}
           className={element("input")}
-          value={promptValue}
-          rows={1}
-          onKeyDown={handleSubmit}
-          onChange={handleInputChange}
         />
       </div>
     </div>

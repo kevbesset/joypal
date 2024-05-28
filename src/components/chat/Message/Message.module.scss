@@ -72,6 +72,10 @@
   &__content {
     font-size: 0.875em;
     white-space: pre-wrap;
+
+    #{$blockSelector}--system & {
+      font-style: italic;
+    }
   }
 
   &__action {

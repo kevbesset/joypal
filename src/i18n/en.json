@@ -13,16 +13,33 @@
       "placeholder": "Ask me anything...",
       "enhancer": {
         "moreModel": "Download other models"
+      },
+      "actions": {
+        "role": "Define a role",
+        "context": "Specify the context",
+        "template": "Use a template"
+      },
+      "role": {
+        "action": {
+          "empty": "Define a role",
+          "completed": "Edit your role"
+        },
+        "title": "🧢 Define a role",
+        "subtitle": "Defining a role will help the model to organize its search and give you a better response.",
+        "placeholder": "Type the role here...",
+        "evaluate": "Evaluate"
       }
     },
     "separator": "Today",
     "message": {
       "action": {
-        "copy": "Copy",
-        "copySuccess": "Copied",
         "redo": "Generate response",
         "edit": "Edit"
       }
     }
+  },
+  "actions": {
+    "copy": "Copy",
+    "copySuccess": "Copied"
   }
 }

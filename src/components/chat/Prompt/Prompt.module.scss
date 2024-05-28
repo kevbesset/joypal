@@ -18,30 +18,21 @@
     width: 100%;
   }
 
-  &__input {
-    font: inherit;
-    width: 100%;
-    background-color: var(--colorInput);
-    color: var(--colorText);
-    border: none;
-    box-shadow: none;
-    border-radius: 0.5rem;
-    padding: 1.25rem 3.5rem;
-    max-height: 60dvh;
-    resize: none;
-    font-size: 0.75em;
-    display: block;
-
-    &::placeholder {
-      opacity: 1;
-      color: var(--colorPlaceholder);
-    }
-  }
-
   &__magicButton {
     position: absolute;
     top: 0.75em;
     left: 0.75em;
     flex-shrink: 0;
+  }
+
+  &__action {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+  }
+
+  &__input {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
 }

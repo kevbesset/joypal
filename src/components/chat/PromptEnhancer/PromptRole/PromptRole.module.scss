@@ -1,0 +1,140 @@
+.prompt-role {
+  $blockSelector: &;
+  background-color: transparent;
+  color: var(--colorText);
+
+  &--completed {
+    color: var(--accentColor);
+  }
+
+  &__icon {
+    background-color: var(--foregroundColor);
+    border-radius: 50%;
+
+    #{$blockSelector}:hover & {
+      background-color: var(--colorText);
+      color: var(--backgroundColor);
+    }
+  }
+
+  &__label {
+    font-size: 0.875em;
+
+    #{$blockSelector}:hover & {
+      text-decoration: underline;
+    }
+  }
+
+  &__info {
+    display: flex;
+    gap: 1.5em;
+    justify-content: space-between;
+    margin-bottom: 2em;
+  }
+
+  &__item {
+    flex: 1;
+    background-color: var(--foregroundColor);
+    border-radius: 0.5em;
+    padding: 0.75em 1.5em 1em;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25em;
+    margin-bottom: 0.75em;
+  }
+
+  &__icon {
+    &--why {
+      color: var(--dangerColor);
+    }
+
+    &--how {
+      color: var(--warningColor);
+    }
+
+    &--example {
+      color: var(--accentColor);
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  &__tip {
+    position: relative;
+    background-color: var(--backgroundColor);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    font-size: 0.75em;
+  }
+
+  &__copy {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  &__body {
+    position: relative;
+  }
+
+  &__score {
+    position: absolute;
+    bottom: 0.75em;
+    right: 0.75em;
+    flex-shrink: 0;
+    font: inherit;
+    border: none;
+    border-radius: 0.5em;
+    box-shadow: none;
+    cursor: pointer;
+    appearance: button;
+    display: inline-flex;
+    gap: 0.25em;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--backgroundColor);
+    color: var(--colorText);
+    min-width: 2em;
+    height: 2em;
+    padding: 0.25em 0.25em;
+
+    &:hover:not([disabled]) {
+      filter: none;
+      background-color: var(--colorText);
+      color: var(--backgroundColor);
+    }
+  }
+
+  &__scoreLabel {
+    display: none;
+    font-size: 0.75em;
+
+    #{$blockSelector}__score:hover & {
+      display: block;
+      padding-left: 0.25em;
+    }
+  }
+
+  &__input {
+    margin-bottom: 2em;
+    padding-right: 3.5rem;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 1em;
+  }
+
+  &__button {
+    flex: 1;
+    padding: 1em;
+  }
+}

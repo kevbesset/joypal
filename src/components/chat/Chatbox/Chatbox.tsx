@@ -1,6 +1,7 @@
 import Separator from "@/components/ui/Separator";
 import { dateIsToday } from "@/libs/helpers/date";
 import useChat from "@/libs/hooks/useChat";
+import { RTCPrompt } from "@/types/Chat.type";
 import { Fragment, useEffect, useRef } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
@@ -30,7 +31,7 @@ export default function Chatbox({ channelId, model }: Props) {
     });
   }
 
-  async function handlePromptSubmit(content: string) {
+  async function handlePromptSubmit(content: RTCPrompt) {
     await sendMessage(content, model);
   }
 
@@ -49,7 +50,7 @@ export default function Chatbox({ channelId, model }: Props) {
   }, [channel.messages]);
 
   return (
-    <div className={block()}>
+    <div className={block({ new: !channel.messages?.length })}>
       <div className={element("body")}>
         <div ref={scrollableView} className={element("list")}>
           {channel.messages &&

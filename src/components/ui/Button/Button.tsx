@@ -1,37 +1,38 @@
 import classNames from "classnames";
-import { MouseEventHandler, PropsWithChildren } from "react";
+import { HTMLAttributes, MouseEventHandler, PropsWithChildren } from "react";
 import bem from "react-bemthis";
 import styles from "./Button.module.scss";
 
 const { block } = bem(styles);
 
-type Props = PropsWithChildren & {
-  className?: string;
-  type?: "submit" | "button";
-  highlight?: boolean;
-  icon?: boolean;
-  disabled?: boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  onMouseEnter?: MouseEventHandler<HTMLButtonElement>;
-  onMouseLeave?: MouseEventHandler<HTMLButtonElement>;
-};
+type Props = HTMLAttributes<HTMLButtonElement> &
+  PropsWithChildren & {
+    className?: string;
+    type?: "submit" | "button";
+    rounded?: boolean;
+    highlight?: boolean;
+    secondary?: boolean;
+    icon?: boolean;
+    disabled?: boolean;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
+    onMouseEnter?: MouseEventHandler<HTMLButtonElement>;
+    onMouseLeave?: MouseEventHandler<HTMLButtonElement>;
+  };
 
 export default function Button({
   children,
   className,
   type,
   highlight,
+  secondary,
   disabled,
+  rounded,
   icon,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
+  ...props
 }: Props) {
   return (
     <button
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      {...props}
       type={type || "button"}
       disabled={disabled}
       className={classNames(
@@ -39,7 +40,9 @@ export default function Button({
         block({
           icon,
           highlight,
+          secondary,
           disabled,
+          rounded,
         })
       )}
     >

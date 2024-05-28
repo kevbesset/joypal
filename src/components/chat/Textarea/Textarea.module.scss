@@ -1,0 +1,19 @@
+.textarea {
+  font: inherit;
+  width: 100%;
+  background-color: var(--colorInput);
+  color: var(--colorText);
+  border: none;
+  box-shadow: none;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  max-height: 60dvh;
+  resize: none;
+  font-size: 0.75em;
+  display: block;
+
+  &::placeholder {
+    opacity: 1;
+    color: var(--colorPlaceholder);
+  }
+}

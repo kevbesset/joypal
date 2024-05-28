@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/store";
 import { save, selectChannel, update, write } from "@/store/chatStore";
-import { ChatMessage } from "@/types/Chat.type";
+import { ChatMessage, RTCPrompt } from "@/types/Chat.type";
 import { useNavigate } from "react-router-dom";
 import { uid } from "../helpers/uniqueId";
 import { streamingChat } from "../services/chatService";
@@ -26,21 +26,27 @@ export default function useChat(channelId: string) {
     };
   }
 
-  async function sendMessage(content: string, model: string) {
-    const message = createMessage(content, model, "user");
+  async function sendMessage(content: RTCPrompt, model: string) {
+    const messageList = [...channel.messages];
+
+    if (content?.role) {
+      const systemMessage = createMessage(content.role, model, "system");
+      await handleMessage(systemMessage);
+      messageList.push(systemMessage);
+    }
+
+    const message = createMessage(content.task, model, "user");
     await handleMessage(message);
+    messageList.push(message);
+
+    await handleMessageResponse(messageList, model);
+
     await handleChannelUpdate();
   }
 
   async function handleMessage(message: ChatMessage) {
     // Push user message
-    dispatch(write({ channelId: channel.id, message }));
-
-    const messageList = [...channel.messages];
-
-    messageList.push(message);
-
-    await handleMessageResponse(messageList, message.model);
+    await dispatch(write({ channelId: channel.id, message }));
   }
 
   async function handleMessageResponse(messages: ChatMessage[], model: string) {
@@ -119,7 +125,7 @@ export default function useChat(channelId: string) {
         })
       );
 
-      await sendMessage(message.content, message.model);
+      await sendMessage({ task: message.content }, message.model);
     }
   }
 
