@@ -34,12 +34,12 @@ export default function Message({ message, onRetry, onEdit }: Props) {
   function renderRole() {
     switch (message.role) {
       case "user":
-        return "You";
+        return t("chatbox.message.role.user");
       case "error":
       case "system":
-        return "System";
+        return t("chatbox.message.role.system");
       default:
-        return "Assistant";
+        return t("chatbox.message.role.assistant");
     }
   }
 
@@ -55,7 +55,6 @@ export default function Message({ message, onRetry, onEdit }: Props) {
           />
         );
       case "system":
-        return "🧢";
       case "error":
         return <Icon name="settings_alert" />;
       default:

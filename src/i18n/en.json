@@ -32,6 +32,11 @@
     },
     "separator": "Today",
     "message": {
+      "role": {
+        "user": "You",
+        "assistant": "Assistant",
+        "system": "System"
+      },
       "action": {
         "redo": "Generate response",
         "edit": "Edit"

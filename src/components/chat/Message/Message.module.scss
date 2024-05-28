@@ -55,6 +55,14 @@
     background-color: var(--foregroundColor);
     border-radius: 1em;
 
+    #{$blockSelector}--system & {
+      background-color: color-mix(
+        in oklch,
+        transparent,
+        var(--foregroundColor) 30%
+      );
+    }
+
     #{$blockSelector}--assistant & {
       background-color: var(--highlightColor);
     }
@@ -72,10 +80,6 @@
   &__content {
     font-size: 0.875em;
     white-space: pre-wrap;
-
-    #{$blockSelector}--system & {
-      font-style: italic;
-    }
   }
 
   &__action {
