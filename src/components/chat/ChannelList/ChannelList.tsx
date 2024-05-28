@@ -1,8 +1,8 @@
 import Icon from "@/components/ui/Icon";
 import { sortChannels } from "@/libs/helpers/sort";
 import { useAppSelector } from "@/store";
-import { selectAvailableChannels } from "@/store/chatStore";
 import { selectFolders } from "@/store/organizerStore";
+import { ChatChannel } from "@/types/Chat.type";
 import bem from "react-bemthis";
 import "react-complex-tree/lib/style-modern.css";
 import { useTranslation } from "react-i18next";
@@ -13,11 +13,14 @@ import styles from "./ChannelList.module.scss";
 
 const { block, element } = bem(styles);
 
-export default function ChannelList() {
+type Props = {
+  channels?: ChatChannel[];
+};
+
+export default function ChannelList({ channels }: Props) {
   const { t } = useTranslation();
   const { channelId } = useParams();
   const folders = useAppSelector(selectFolders);
-  const channels = useAppSelector(selectAvailableChannels);
 
   return (
     <div className={block()}>

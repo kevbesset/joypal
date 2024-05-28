@@ -4,8 +4,8 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Search from "@/components/ui/Search";
 import Tabs from "@/components/ui/Tabs";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { selectAvailableChannels } from "@/store/chatStore";
+import useChannelSearch from "@/libs/hooks/useChannelSearch";
+import { useAppDispatch } from "@/store";
 import { create } from "@/store/organizerStore";
 import { useState } from "react";
 import bem from "react-bemthis";
@@ -16,9 +16,9 @@ import styles from "./Sidebar.module.scss";
 const { block, element } = bem(styles);
 
 export default function Sidebar() {
-  const channels = useAppSelector(selectAvailableChannels);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { value, setValue, channels } = useChannelSearch();
 
   const tabs = [
     {
@@ -54,7 +54,7 @@ export default function Sidebar() {
         <Tabs tabs={tabs} active={activeTab} onTabChange={setActiveTab} />
       </div>
       <div className={element("search")}>
-        <Search name="sidebar_chat_search" />
+        <Search name="sidebar_chat_search" value={value} onChange={setValue} />
         <Button
           icon
           className={element("newFolder")}
@@ -63,7 +63,7 @@ export default function Sidebar() {
           <Icon name="create_new_folder" />
         </Button>
       </div>
-      <ChannelList />
+      <ChannelList channels={channels} />
     </aside>
   );
 }
