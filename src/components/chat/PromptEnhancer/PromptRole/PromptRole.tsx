@@ -123,12 +123,6 @@ export default function PromptRole({ onSubmit }: Props) {
             className={element("input")}
             onSubmit={handleSubmit}
           />
-          <button className={element("score")}>
-            <span className={element("scoreLabel")}>
-              {t("chatbox.prompt.role.evaluate")}
-            </span>
-            <Icon name="eyeglasses" />
-          </button>
         </div>
         <div className={element("footer")}>
           <Button

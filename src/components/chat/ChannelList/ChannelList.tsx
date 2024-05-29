@@ -1,14 +1,11 @@
 import Icon from "@/components/ui/Icon";
 import { sortChannels } from "@/libs/helpers/sort";
-import { useAppSelector } from "@/store";
-import { selectFolders } from "@/store/organizerStore";
 import { ChatChannel } from "@/types/Chat.type";
 import bem from "react-bemthis";
 import "react-complex-tree/lib/style-modern.css";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import ChannelCard from "../ChannelCard";
-import Folder from "../Folder";
 import styles from "./ChannelList.module.scss";
 
 const { block, element } = bem(styles);
@@ -20,13 +17,9 @@ type Props = {
 export default function ChannelList({ channels }: Props) {
   const { t } = useTranslation();
   const { channelId } = useParams();
-  const folders = useAppSelector(selectFolders);
 
   return (
     <div className={block()}>
-      {folders &&
-        folders.map((folder) => <Folder key={folder.id} folder={folder} />)}
-      {!!folders.length && <hr className={element("separator")} />}
       <Link to="/" className={element("newChat")}>
         <Icon name="add" />
         <span className={element("newChatText")}>

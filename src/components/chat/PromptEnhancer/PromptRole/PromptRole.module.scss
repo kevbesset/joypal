@@ -85,44 +85,6 @@
     position: relative;
   }
 
-  &__score {
-    position: absolute;
-    bottom: 0.75em;
-    right: 0.75em;
-    flex-shrink: 0;
-    font: inherit;
-    border: none;
-    border-radius: 0.5em;
-    box-shadow: none;
-    cursor: pointer;
-    appearance: button;
-    display: inline-flex;
-    gap: 0.25em;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--backgroundColor);
-    color: var(--colorText);
-    min-width: 2em;
-    height: 2em;
-    padding: 0.25em 0.25em;
-
-    &:hover:not([disabled]) {
-      filter: none;
-      background-color: var(--colorText);
-      color: var(--backgroundColor);
-    }
-  }
-
-  &__scoreLabel {
-    display: none;
-    font-size: 0.75em;
-
-    #{$blockSelector}__score:hover & {
-      display: block;
-      padding-left: 0.25em;
-    }
-  }
-
   &__input {
     margin-bottom: 2em;
     padding-right: 3.5rem;

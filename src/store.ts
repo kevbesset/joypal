@@ -2,12 +2,10 @@ import chatStore from "@/store/chatStore";
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import modelStore from "./store/modelStore";
-import organizerStore from "./store/organizerStore";
 
 const store = configureStore({
   reducer: {
     chat: chatStore,
-    organizer: organizerStore,
     model: modelStore,
   },
 });
