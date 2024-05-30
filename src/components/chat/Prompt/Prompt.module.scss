@@ -1,38 +1,47 @@
 .prompt {
   $blockSelector: &;
 
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap: 0.5em;
-
-  &__title {
-    font-size: 2em;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-
-  &__field {
-    position: relative;
-    width: 100%;
-  }
-
-  &__magicButton {
-    position: absolute;
-    top: 0.75em;
-    left: 0.75em;
-    flex-shrink: 0;
-  }
-
-  &__action {
-    display: flex;
-    justify-content: space-between;
-    gap: 1em;
-  }
+  position: relative;
 
   &__input {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
+    padding-bottom: 3rem;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0.5em;
+    left: 1em;
+    right: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__cell {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  &__button,
+  &__submit {
+    font-size: 0.625em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  &__button {
+    background-color: transparent;
+    border: 1px solid
+      color-mix(in oklch, transparent, var(--colorPlaceholder) 20%);
+  }
+
+  &__submit {
+    &:disabled {
+      background-color: transparent;
+      color: var(--colorPlaceholder);
+      border: 1px solid
+        color-mix(in oklch, transparent, var(--colorPlaceholder) 20%);
+    }
   }
 }

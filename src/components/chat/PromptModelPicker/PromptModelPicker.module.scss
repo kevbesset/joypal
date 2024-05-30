@@ -1,26 +1,23 @@
-.prompt-enhancer {
+.prompt-model-picker {
   $blockSelector: &;
 
   font: inherit;
   border: none;
-  border-radius: 0.5em;
   box-shadow: none;
   cursor: pointer;
   appearance: button;
   display: inline-flex;
-  gap: 0.25em;
+  gap: 0.25rem;
   align-items: center;
   justify-content: center;
   background-color: var(--backgroundColor);
   color: var(--colorText);
-  min-width: 2em;
-  height: 2em;
-  padding: 0.25em 0.25em;
+  padding: 0.25rem;
+  border-radius: 99em;
 
   &:hover:not([disabled]) {
     filter: none;
-    background-color: var(--colorText);
-    color: var(--backgroundColor);
+    background-color: var(--highlightColor);
   }
 
   &__dropdown {

@@ -5,8 +5,8 @@ import { RTCPrompt } from "@/types/Chat.type";
 import { useRef, useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
-import PromptEnhancer from "../PromptEnhancer";
-import PromptRole from "../PromptEnhancer/PromptRole";
+import PromptModelPicker from "../PromptModelPicker";
+import PromptRole from "../PromptRole";
 import Textarea from "../Textarea";
 import styles from "./Prompt.module.scss";
 
@@ -42,32 +42,42 @@ export default function Prompt({ onSubmit, isNew }: Props) {
 
   return (
     <div className={block()}>
-      {isNew && (
-        <>
-          <div className={element("title")}>{t("chatbox.prompt.title")}</div>
+      <Textarea
+        name="prompt"
+        value={promptValue}
+        onChange={setPromptValue}
+        onSubmit={sendSubmitEvent}
+        placeholder={t("chatbox.prompt.placeholder")}
+        className={element("input")}
+      />
+      <div className={element("footer")}>
+        <div className={element("cell")}>
+          <PromptModelPicker className={element("button")} />
           {isNew && (
-            <div className={element("action")}>
-              <PromptRole onSubmit={setPromptRole} />
-              <Button className={element("actionButton")}>
-                <Icon name="edit_note" className={element("actionIcon")} />
-                <span className={element("actionLabel")}>
-                  {t("chatbox.prompt.actions.template")}
-                </span>
-              </Button>
-            </div>
+            <PromptRole onSubmit={setPromptRole} completed={!!promptRole} />
           )}
-        </>
-      )}
-      <div className={element("field")}>
-        <PromptEnhancer className={element("magicButton")} />
-        <Textarea
-          name="prompt"
-          value={promptValue}
-          onChange={setPromptValue}
-          onSubmit={sendSubmitEvent}
-          placeholder={t("chatbox.prompt.placeholder")}
-          className={element("input")}
-        />
+        </div>
+        <div className={element("cell")}>
+          {isNew && (!!promptValue || !!promptRole) && (
+            <Button
+              icon
+              rounded
+              className={element("submit")}
+              onSubmit={sendSubmitEvent}
+            >
+              <Icon name="bookmark" />
+            </Button>
+          )}
+          <Button
+            icon
+            rounded
+            disabled={!promptValue}
+            className={element("submit")}
+            onSubmit={sendSubmitEvent}
+          >
+            <Icon name="north" />
+          </Button>
+        </div>
       </div>
     </div>
   );

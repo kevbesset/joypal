@@ -5,27 +5,24 @@ import Icon from "@/components/ui/Icon";
 import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
-import Textarea from "../../Textarea";
+import Textarea from "../Textarea";
 import styles from "./PromptRole.module.scss";
 
 const { block, element } = bem(styles);
 
 type Props = {
   onSubmit?: (role: string) => void;
+  completed?: boolean;
 };
 
-export default function PromptRole({ onSubmit }: Props) {
+export default function PromptRole({ onSubmit, completed }: Props) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [role, setRole] = useState("");
 
-  const completed = !!role;
-
   function handleSubmit() {
-    if (role) {
-      onSubmit?.(role);
-      setOpen(false);
-    }
+    onSubmit?.(role);
+    setOpen(false);
   }
 
   return (
@@ -36,7 +33,10 @@ export default function PromptRole({ onSubmit }: Props) {
         })}
         onClick={() => setOpen(!open)}
       >
-        <Icon name={completed ? "check" : "add"} className={element("icon")} />
+        <Icon
+          name={completed ? "check" : "engineering"}
+          className={element("icon")}
+        />
         <span className={element("label")}>
           {t(`chatbox.prompt.role.action.${completed ? "completed" : "empty"}`)}
         </span>
@@ -129,7 +129,6 @@ export default function PromptRole({ onSubmit }: Props) {
             highlight
             className={element("button")}
             onClick={handleSubmit}
-            disabled={!completed}
           >
             Send
           </Button>

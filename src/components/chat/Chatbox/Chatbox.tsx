@@ -77,6 +77,9 @@ export default function Chatbox({ channelId, model }: Props) {
         </div>
       </div>
       <footer className={element("footer")}>
+        {!channel.messages.length && (
+          <div className={element("title")}>{t("chatbox.prompt.title")}</div>
+        )}
         <Prompt
           onSubmit={handlePromptSubmit}
           isNew={!channel.messages?.length}

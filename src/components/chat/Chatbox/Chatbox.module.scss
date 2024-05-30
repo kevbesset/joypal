@@ -27,6 +27,13 @@
     }
   }
 
+  &__title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;

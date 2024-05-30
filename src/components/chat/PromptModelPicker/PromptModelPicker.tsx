@@ -3,36 +3,23 @@ import { formatSize } from "@/libs/helpers/number";
 import useModel from "@/libs/hooks/useModel";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import classNames from "classnames";
-import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
-import styles from "./PromptEnhancer.module.scss";
+import styles from "./PromptModelPicker.module.scss";
 
 const { block, element } = bem(styles);
 
-export default function PromptEnhancer({ ...props }) {
-  const [magicButtonHover, setMagicButtonHover] = useState(false);
+export default function PromptModelPicker({ ...props }) {
   const { model, models, setModel } = useModel();
   const { t } = useTranslation();
-
-  function handleMouseOver() {
-    setMagicButtonHover(true);
-  }
-
-  function handleMouseOut() {
-    setMagicButtonHover(false);
-  }
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button
-          onMouseEnter={handleMouseOver}
-          onMouseLeave={handleMouseOut}
-          className={classNames(block(), props.className)}
-        >
-          <Icon name="language" fill={magicButtonHover} />
-          <code className={element("currentModel")}>{model}</code>
+        <button className={classNames(props.className, block())}>
+          <Icon name="language" />
+          {model}
+          <Icon name="arrow_drop_down" className={element("dropdownIcon")} />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
