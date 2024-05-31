@@ -1,22 +1,11 @@
 .prompt-role {
   $blockSelector: &;
-  color: var(--colorText);
-  font-size: 0.75em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 99em;
-  background-color: transparent;
-  border: 1px solid
-    color-mix(in oklch, transparent, var(--colorPlaceholder) 20%);
-
-  &:hover:not([disabled]) {
-    filter: none;
-    background-color: var(--highlightColor);
-  }
 
   &--completed {
     color: var(--accentColor);
+    &:hover:not([disabled]) {
+      color: var(--accentColor);
+    }
   }
 
   &__icon {
@@ -26,7 +15,7 @@
   }
 
   &__label {
-    font-size: 0.875em;
+    font-size: 1em;
   }
 
   &__info {

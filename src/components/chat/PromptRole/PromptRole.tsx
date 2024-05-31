@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button";
 import CopyButton from "@/components/ui/Button/CopyButton";
 import Dialog from "@/components/ui/Dialog";
 import Icon from "@/components/ui/Icon";
+import classNames from "classnames";
 import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
@@ -13,9 +14,10 @@ const { block, element } = bem(styles);
 type Props = {
   onSubmit?: (role: string) => void;
   completed?: boolean;
+  className?: string;
 };
 
-export default function PromptRole({ onSubmit, completed }: Props) {
+export default function PromptRole({ onSubmit, completed, className }: Props) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [role, setRole] = useState("");
@@ -28,9 +30,13 @@ export default function PromptRole({ onSubmit, completed }: Props) {
   return (
     <>
       <Button
-        className={block({
-          completed,
-        })}
+        rounded
+        className={classNames(
+          className,
+          block({
+            completed,
+          })
+        )}
         onClick={() => setOpen(!open)}
       >
         <Icon

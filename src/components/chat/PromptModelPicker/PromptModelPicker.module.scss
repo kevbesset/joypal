@@ -40,13 +40,14 @@
   }
 
   &__item {
-    padding: 0.25em 0.5em;
+    padding: 0.25rem 0.5rem;
     cursor: pointer;
-    border-radius: 0.25em;
+    border-radius: 0.25rem;
     display: flex;
-    gap: 0.5em;
+    gap: 0.5rem;
     align-items: center;
     justify-content: space-between;
+    font-size: 0.75em;
 
     &:focus:not(&--active):not([aria-disabled]),
     &:hover:not(&--active):not([aria-disabled]) {

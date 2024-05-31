@@ -1,0 +1,108 @@
+.template-card {
+  $blockSelector: &;
+
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  gap: 0.5em;
+  border-radius: 0.5em;
+  cursor: pointer;
+
+  &:hover:not(&--active) {
+    background-color: var(--colorInput);
+  }
+
+  &--active {
+    background-color: var(--primaryColor);
+    cursor: default;
+  }
+
+  &--isRenaming {
+    padding: 0;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    line-height: 1.2;
+
+    #{$blockSelector}:hover & {
+      mask-image: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0) 80%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+  }
+
+  &__header {
+    display: flex;
+    gap: 1em;
+    align-items: baseline;
+  }
+
+  &__title {
+    font-size: 0.875em;
+    font-weight: bold;
+    flex: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__date {
+    flex-shrink: 0;
+    font-size: 0.625em;
+    color: var(--colorMuted);
+  }
+
+  &__content {
+    font-size: 0.625em;
+    color: var(--colorMuted);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    #{$blockSelector}--active & {
+      color: var(--colorText);
+    }
+  }
+
+  &__action {
+    position: absolute;
+    bottom: 0.625em;
+    right: 0.5em;
+    opacity: 0;
+    pointer-events: none;
+
+    #{$blockSelector}:hover:not(#{$blockSelector}--isRenaming) & {
+      opacity: 1;
+      display: flex;
+      gap: 0.25em;
+      pointer-events: initial;
+    }
+  }
+
+  &__button {
+    font-size: 0.75em;
+
+    &--delete {
+      background-color: var(--dangerColor);
+      color: var(--dangerColorText);
+    }
+  }
+
+  &__input {
+    width: 100%;
+    background: none;
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    color: var(--colorText);
+  }
+}

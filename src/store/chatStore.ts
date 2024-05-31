@@ -1,15 +1,17 @@
 import { getFromStorage, setFromStorage } from "@/libs/helpers/storage";
 import { uid } from "@/libs/helpers/uniqueId";
 import { RootState } from "@/store";
-import { ChatChannel, ChatMessage } from "@/types/Chat.type";
+import { ChatChannel, ChatMessage, ChatTemplate } from "@/types/Chat.type";
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 
 type ChatState = {
   channels: ChatChannel[];
+  templates: ChatTemplate[];
 };
 
 const initialState: ChatState = {
   channels: getFromStorage("channels") || [],
+  templates: getFromStorage("templates") || [],
 };
 
 export const chatStore = createSlice({
@@ -112,12 +114,47 @@ export const chatStore = createSlice({
 
       setFromStorage("channels", state.channels);
     },
+    saveAsTemplate: (state, action: PayloadAction<ChatTemplate>) => {
+      state.templates = [...state.templates, action.payload];
+
+      setFromStorage("templates", state.templates);
+    },
+    removeTemplate: (state, action: PayloadAction<string>) => {
+      state.templates = state.templates.filter(
+        (tem) => tem.id !== action.payload
+      );
+
+      setFromStorage("templates", state.templates);
+    },
+    renameTemplate: (
+      state,
+      action: PayloadAction<{ templateId: string; name: string }>
+    ) => {
+      const templateIndex = state.templates.findIndex(
+        (tem) => tem.id === action.payload.templateId
+      );
+
+      if (templateIndex >= 0) {
+        state.templates[templateIndex].title = action.payload.name;
+      }
+
+      setFromStorage("templates", state.templates);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { remove, write, save, update, rename, create } =
-  chatStore.actions;
+export const {
+  remove,
+  write,
+  save,
+  update,
+  rename,
+  create,
+  saveAsTemplate,
+  removeTemplate,
+  renameTemplate,
+} = chatStore.actions;
 
 const selectChannels = (state: RootState) => state.chat.channels;
 

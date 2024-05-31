@@ -1,5 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/store";
-import { save, selectChannel, update, write } from "@/store/chatStore";
+import {
+  save,
+  saveAsTemplate,
+  selectChannel,
+  update,
+  write,
+} from "@/store/chatStore";
 import { ChatMessage, RTCPrompt } from "@/types/Chat.type";
 import { useNavigate } from "react-router-dom";
 import { uid } from "../helpers/uniqueId";
@@ -42,6 +48,26 @@ export default function useChat(channelId: string) {
     await handleMessageResponse(messageList, model);
 
     await handleChannelUpdate();
+  }
+
+  async function saveTemplate(content: RTCPrompt, model: string) {
+    const messageList: ChatMessage[] = [];
+
+    if (content?.role) {
+      const systemMessage = createMessage(content.role, model, "system");
+      messageList.push(systemMessage);
+    }
+
+    const message = createMessage(content.task, model, "user");
+    messageList.push(message);
+
+    dispatch(
+      saveAsTemplate({
+        id: `t${uid()}`,
+        title: "New template",
+        messages: messageList,
+      })
+    );
   }
 
   async function handleMessage(message: ChatMessage) {
@@ -151,6 +177,7 @@ export default function useChat(channelId: string) {
   return {
     channel,
     sendMessage,
+    saveTemplate,
     retry,
     edit,
     download,

@@ -17,7 +17,8 @@
       "actions": {
         "role": "Define a role",
         "context": "Specify the context",
-        "template": "Use a template"
+        "template": "Save template",
+        "alreadyTemplate": "Template used"
       },
       "role": {
         "action": {
@@ -28,6 +29,14 @@
         "subtitle": "Defining a role will help the model to organize its search and give you a better response.",
         "placeholder": "Type the role here...",
         "evaluate": "Evaluate"
+      },
+      "template": {
+        "title": "Save as a template",
+        "subtitle": "subtitle here...",
+        "placeholder": "Select a template or create one",
+        "update": "Update template",
+        "create": "Create template",
+        "cancel": "Cancel"
       }
     },
     "separator": "Today",

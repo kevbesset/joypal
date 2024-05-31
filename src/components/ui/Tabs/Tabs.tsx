@@ -44,7 +44,7 @@ export default function Tabs({ tabs, active, onTabChange }: Props) {
                 onClick={() => onTabChange(tab.key)}
               >
                 {tab.icon && (
-                  <Icon name={tab.icon} fill className={element("icon")} />
+                  <Icon name={tab.icon} className={element("icon")} />
                 )}
                 <span className={element("text")}>{tab.label}</span>
                 {!!tab.count && (

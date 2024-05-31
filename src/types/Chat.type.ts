@@ -19,6 +19,12 @@ export type ChatChannel = {
   messages: ChatMessage[];
 };
 
+export type ChatTemplate = {
+  id: string;
+  title: string;
+  messages: ChatMessage[];
+};
+
 export type ChatFolder = {
   id: string;
   name: string;
@@ -33,5 +39,4 @@ export type ChatChannelOrganizer = {
 export type RTCPrompt = {
   role?: string;
   task: string;
-  context?: string;
 };

@@ -3,14 +3,6 @@
   flex-direction: column;
   gap: 0.25em;
 
-  &__separator {
-    margin: 0.5em auto;
-    width: calc(100% - 1em);
-    border-width: 0;
-    border-bottom-width: 1px;
-    border-color: var(--colorToolbarStroke);
-  }
-
   &__newChat {
     color: var(--colorMuted);
     position: relative;
@@ -30,34 +22,4 @@
   &__newChatText {
     font-size: 0.875em;
   }
-
-  --rct-color-tree-bg: transparent;
-  --rct-item-height: 28px;
-  --rct-color-search-highlight-bg: var(--primaryColor);
-
-  --rct-color-tree-focus-outline: transparent;
-  --rct-item-margin: 0.25rem;
-  --rct-item-padding: 0.5rem;
-  --rct-radius: 0.5rem;
-  --rct-bar-offset: 0;
-  --rct-bar-width: 0;
-  --rct-bar-color: transparent;
-  --rct-focus-outline: color-mix(in oklch, transparent, currentColor 30%);
-
-  --rct-color-focustree-item-selected-bg: var(--primaryColor);
-  --rct-color-focustree-item-hover-bg: var(--colorInput);
-  --rct-color-focustree-item-hover-text: inherit;
-  --rct-color-focustree-item-active-bg: var(--primaryColor);
-  --rct-color-focustree-item-active-text: var(--colorText);
-
-  --rct-color-focustree-item-focused-border: red;
-  --rct-color-focustree-item-draggingover-bg: var(--colorInput);
-  --rct-color-focustree-item-draggingover-color: inherit;
-  --rct-color-drag-between-line-bg: var(--accentColor);
-
-  --rct-arrow-size: 10px;
-  --rct-arrow-container-size: 16px;
-  --rct-arrow-padding: 0.5em;
-  --rct-color-arrow: currentColor;
-  --rct-cursor: pointer;
 }

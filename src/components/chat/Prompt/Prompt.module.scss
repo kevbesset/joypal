@@ -4,7 +4,13 @@
   position: relative;
 
   &__input {
-    padding-bottom: 3rem;
+    padding-bottom: 2.5rem;
+    transition: box-shadow var(--transition);
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0.25em 1em -0.25em var(--colorShadow);
+    }
   }
 
   &__footer {
@@ -28,15 +34,27 @@
     display: flex;
     align-items: center;
     gap: 0.5em;
+    height: 2em;
   }
 
   &__button {
     background-color: transparent;
     border: 1px solid
       color-mix(in oklch, transparent, var(--colorPlaceholder) 20%);
+
+    &:hover:not([disabled]) {
+      filter: none;
+      background-color: var(--backgroundColor);
+    }
+
+    &:disabled {
+      color: var(--colorPlaceholder);
+    }
   }
 
   &__submit {
+    background-color: var(--backgroundColor);
+
     &:disabled {
       background-color: transparent;
       color: var(--colorPlaceholder);

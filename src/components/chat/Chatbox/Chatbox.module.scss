@@ -21,10 +21,6 @@
       rgba(0, 0, 0, 0) 100%
     );
     scrollbar-width: none;
-
-    #{$blockSelector}--new & {
-      display: none;
-    }
   }
 
   &__title {

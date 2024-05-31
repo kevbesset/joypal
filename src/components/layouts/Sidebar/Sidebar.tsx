@@ -1,10 +1,12 @@
 import ChannelList from "@/components/chat/ChannelList";
+import TemplateList from "@/components/chat/TemplateList";
 import UploadChat from "@/components/chat/UploadChat";
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import Search from "@/components/ui/Search";
 import Tabs from "@/components/ui/Tabs";
 import useChannelSearch from "@/libs/hooks/useChannelSearch";
+import { useAppSelector } from "@/store";
 import { useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
@@ -16,6 +18,7 @@ const { block, element } = bem(styles);
 export default function Sidebar() {
   const { t } = useTranslation();
   const { value, setValue, channels } = useChannelSearch();
+  const templates = useAppSelector((state) => state.chat.templates);
 
   const tabs = [
     {
@@ -26,7 +29,7 @@ export default function Sidebar() {
     },
     {
       key: "templates",
-      icon: "edit_note",
+      icon: "bookmark",
       label: t("chatbox.sidebar.tabs.templates"),
     },
   ];
@@ -60,8 +63,13 @@ export default function Sidebar() {
       ) : (
         <>
           <div className={element("search")}>
-            <Search name="sidebarTemplateSearch" />
+            <Search
+              name="sidebarTemplateSearch"
+              value={value}
+              onChange={setValue}
+            />
           </div>
+          <TemplateList templates={templates} />
         </>
       )}
     </aside>

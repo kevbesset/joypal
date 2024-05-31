@@ -25,6 +25,11 @@
     gap: 0.625em;
   }
 
+  &__search {
+    display: flex;
+    align-items: center;
+  }
+
   &__newFolder {
     flex-shrink: 0;
     color: var(--accentColor);

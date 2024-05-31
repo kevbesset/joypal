@@ -25,7 +25,7 @@ export default function PromptModelPicker({ ...props }) {
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           align="start"
-          sideOffset={16}
+          sideOffset={8}
           className={element("dropdown")}
         >
           {models.map((m) => (
