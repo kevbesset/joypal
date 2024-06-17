@@ -15,12 +15,19 @@ type Props = {
   onSubmit?: (role: string) => void;
   completed?: boolean;
   className?: string;
+  role?: string;
+  setRole: (role: string) => void;
 };
 
-export default function PromptRole({ onSubmit, completed, className }: Props) {
+export default function PromptRole({
+  onSubmit,
+  completed,
+  className,
+  role = "",
+  setRole,
+}: Props) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [role, setRole] = useState("");
 
   function handleSubmit() {
     onSubmit?.(role);

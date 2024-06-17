@@ -144,6 +144,8 @@ export default function Prompt({
           {isNew && (
             <>
               <PromptRole
+                role={promptRole}
+                setRole={setPromptRole}
                 onSubmit={setPromptRole}
                 completed={!!promptRole}
                 className={element("button")}

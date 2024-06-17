@@ -2,10 +2,10 @@ import { useEffect } from "react";
 
 // Updates the height of a <textarea> when the value changes.
 const useAutosizeTextArea = (
-  textAreaRef: HTMLTextAreaElement | null,
+  ref: HTMLTextAreaElement | null,
   value: string
 ) => {
-  useEffect(() => {
+  function onTextareaChange(textAreaRef = ref) {
     if (textAreaRef) {
       if (value === "") {
         textAreaRef.style.height = "";
@@ -19,7 +19,13 @@ const useAutosizeTextArea = (
         textAreaRef.style.height = scrollHeight + "px";
       }
     }
-  }, [textAreaRef, value]);
+  }
+
+  useEffect(() => {
+    onTextareaChange();
+  });
+
+  return { manualTrigger: onTextareaChange };
 };
 
 export default useAutosizeTextArea;
