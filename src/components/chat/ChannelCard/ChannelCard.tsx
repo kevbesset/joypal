@@ -1,9 +1,10 @@
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import { formatTime } from "@/libs/helpers/date";
+import { uid } from "@/libs/helpers/uniqueId";
 import { useClickOutside } from "@/libs/hooks/useClickOutside";
 import { useAppDispatch } from "@/store";
-import { remove, rename } from "@/store/chatStore";
+import { create, remove, rename } from "@/store/chatStore";
 import { ChatChannel } from "@/types/Chat.type";
 import {
   ChangeEvent,
@@ -44,6 +45,17 @@ export default function ChannelCard({ active, channel, ...props }: Props) {
   function handleEditChannel(event: ReactMouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     setIsRenaming(true);
+  }
+
+  function handleDuplicateChannel(event: ReactMouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    dispatch(
+      create({
+        ...channel,
+        id: `c${uid()}`,
+        title: `Copy of ${title}`,
+      })
+    );
   }
 
   function handleDoubleClick() {
@@ -112,6 +124,13 @@ export default function ChannelCard({ active, channel, ...props }: Props) {
       <div className={element("action")}>
         <Button icon onClick={handleEditChannel} className={element("button")}>
           <Icon name="edit" />
+        </Button>
+        <Button
+          icon
+          onClick={handleDuplicateChannel}
+          className={element("button")}
+        >
+          <Icon name="content_copy" />
         </Button>
         <Button
           icon
