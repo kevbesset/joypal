@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import { formatTime } from "@/libs/helpers/date";
 import { useClickOutside } from "@/libs/hooks/useClickOutside";
+import useEvent from "@/libs/hooks/useEvent";
 import { useAppDispatch } from "@/store";
 import { removeTemplate, renameTemplate } from "@/store/chatStore";
 import { ChatChannel } from "@/types/Chat.type";
@@ -13,6 +14,7 @@ import {
   useState,
 } from "react";
 import bem from "react-bemthis";
+import { useNavigate } from "react-router-dom";
 import styles from "./TemplateCard.module.scss";
 
 const { block, element } = bem(styles);
@@ -29,6 +31,8 @@ export default function TemplateCard({ active, template, ...props }: Props) {
   const lastMessage = template.messages[template.messages.length - 1];
   const time = formatTime(new Date(lastMessage.created_at));
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { trigger } = useEvent("use:template");
 
   function handleRemoveTemplate(event: ReactMouseEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -42,6 +46,11 @@ export default function TemplateCard({ active, template, ...props }: Props) {
 
   function handleDoubleClick() {
     setIsRenaming(true);
+  }
+
+  function handleClick() {
+    trigger({ template });
+    navigate("/");
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -82,6 +91,7 @@ export default function TemplateCard({ active, template, ...props }: Props) {
       ref={itemRef}
       className={block({ active, isRenaming })}
       onDoubleClick={handleDoubleClick}
+      onClick={handleClick}
       {...props}
     >
       {isRenaming ? (

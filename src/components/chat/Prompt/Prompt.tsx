@@ -1,9 +1,10 @@
 import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import useAutosizeTextArea from "@/libs/hooks/useAutosizeTextarea";
+import useEvent from "@/libs/hooks/useEvent";
 import { useAppSelector } from "@/store";
 import { ChatTemplate, RTCPrompt } from "@/types/Chat.type";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
 import PromptModelPicker from "../PromptModelPicker";
@@ -31,6 +32,7 @@ export default function Prompt({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [promptValue, setPromptValue] = useState("");
   const [promptRole, setPromptRole] = useState<string>();
+  const { hasEventReceived, read } = useEvent("use:template");
 
   const isEmpty = !promptRole && !promptValue;
 
@@ -115,6 +117,16 @@ export default function Prompt({
       setPromptValue(firstUserMessage.content);
     }
   }
+
+  useEffect(() => {
+    if (hasEventReceived && location.pathname === "/") {
+      const args = read();
+
+      if (args?.template) {
+        handleUseTemplate(args?.template as ChatTemplate);
+      }
+    }
+  });
 
   return (
     <div className={block()}>
