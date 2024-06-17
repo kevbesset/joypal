@@ -3,6 +3,10 @@
 
   position: relative;
 
+  &--system {
+    display: none;
+  }
+
   &__avatar {
     position: absolute;
     top: 0;

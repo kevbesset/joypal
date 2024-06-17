@@ -31,6 +31,7 @@ export default function Sidebar() {
       key: "templates",
       icon: "bookmark",
       label: t("chatbox.sidebar.tabs.templates"),
+      count: templates.length,
     },
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].key);

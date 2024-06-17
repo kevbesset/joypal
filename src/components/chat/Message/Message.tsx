@@ -88,7 +88,11 @@ export default function Message({ message, onRetry, onEdit }: Props) {
         </small>
       </div>
       {isEdit ? (
-        <Prompt onSubmit={handleEditSubmit} />
+        <Prompt
+          onSubmit={handleEditSubmit}
+          initialValue={message.content}
+          onCancel={() => setIsEdit(false)}
+        />
       ) : (
         <div className={element("box")}>
           <div className={element("content")}>

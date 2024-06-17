@@ -32,7 +32,7 @@ export const chatStore = createSlice({
         // No channel found, let's create it
         state.channels.push({
           id: channelId,
-          title: message.content,
+          title: "New chat",
           messages: [message],
         });
       } else {

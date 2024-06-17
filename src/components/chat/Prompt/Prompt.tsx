@@ -17,20 +17,24 @@ const { block, element } = bem(styles);
 
 type Props = {
   onSubmit: (prompt: RTCPrompt) => void;
-  onCreateTemplate: (title: string, prompt: RTCPrompt) => void;
-  onUpdateTemplate: (id: string, prompt: RTCPrompt) => void;
+  onCreateTemplate?: (title: string, prompt: RTCPrompt) => void;
+  onUpdateTemplate?: (id: string, prompt: RTCPrompt) => void;
+  onCancel?: () => void;
   isNew?: boolean;
+  initialValue?: string;
 };
 
 export default function Prompt({
   onSubmit,
   onCreateTemplate,
   onUpdateTemplate,
+  onCancel,
   isNew,
+  initialValue,
 }: Props) {
   const { t } = useTranslation();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [promptValue, setPromptValue] = useState("");
+  const [promptValue, setPromptValue] = useState(initialValue || "");
   const [promptRole, setPromptRole] = useState<string>();
   const { hasEventReceived, read } = useEvent("use:template");
 
@@ -85,7 +89,7 @@ export default function Prompt({
 
   function handleUpdateTemplate(id: string) {
     if (promptRole || promptValue) {
-      onUpdateTemplate(id, {
+      onUpdateTemplate?.(id, {
         role: promptRole,
         task: promptValue,
       });
@@ -94,7 +98,7 @@ export default function Prompt({
 
   function handleCreateTemplate(title: string) {
     if (promptRole || promptValue) {
-      onCreateTemplate(title, {
+      onCreateTemplate?.(title, {
         role: promptRole,
         task: promptValue,
       });
@@ -141,6 +145,16 @@ export default function Prompt({
       <div className={element("footer")}>
         <div className={element("cell")}>
           <PromptModelPicker className={element("button")} />
+          {typeof onCancel !== "undefined" && (
+            <Button
+              rounded
+              disabled={!promptValue}
+              className={element("submit", "cancel")}
+              onClick={onCancel}
+            >
+              {t("chatbox.prompt.actions.cancel")}
+            </Button>
+          )}
           {isNew && (
             <>
               <PromptRole

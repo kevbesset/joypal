@@ -19,7 +19,8 @@
         "context": "Specify the context",
         "template": "Save template",
         "useTemplate": "Use a template",
-        "alreadyTemplate": "Template used"
+        "alreadyTemplate": "Template used",
+        "cancel": "Cancel"
       },
       "role": {
         "action": {
