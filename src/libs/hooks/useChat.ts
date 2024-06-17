@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/store";
 import {
+  createTemplate as createTemplateInStore,
   save,
-  saveAsTemplate,
   selectChannel,
   update,
+  updateTemplate as updateTemplateStore,
   write,
 } from "@/store/chatStore";
 import { ChatMessage, RTCPrompt } from "@/types/Chat.type";
@@ -50,7 +51,10 @@ export default function useChat(channelId: string) {
     await handleChannelUpdate();
   }
 
-  async function saveTemplate(content: RTCPrompt, model: string) {
+  function buildTemplateMessageList(
+    content: RTCPrompt,
+    model: string
+  ): ChatMessage[] {
     const messageList: ChatMessage[] = [];
 
     if (content?.role) {
@@ -61,11 +65,28 @@ export default function useChat(channelId: string) {
     const message = createMessage(content.task, model, "user");
     messageList.push(message);
 
+    return messageList;
+  }
+
+  async function createTemplate(
+    title: string,
+    content: RTCPrompt,
+    model: string
+  ) {
     dispatch(
-      saveAsTemplate({
+      createTemplateInStore({
         id: `t${uid()}`,
-        title: "New template",
-        messages: messageList,
+        title,
+        messages: buildTemplateMessageList(content, model),
+      })
+    );
+  }
+
+  async function updateTemplate(id: string, content: RTCPrompt, model: string) {
+    dispatch(
+      updateTemplateStore({
+        id,
+        messages: buildTemplateMessageList(content, model),
       })
     );
   }
@@ -177,7 +198,8 @@ export default function useChat(channelId: string) {
   return {
     channel,
     sendMessage,
-    saveTemplate,
+    createTemplate,
+    updateTemplate,
     retry,
     edit,
     download,

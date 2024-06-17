@@ -23,7 +23,7 @@ export default function Chatbox({ channelId, model }: Props) {
   const location = useLocation();
 
   const scrollableView = useRef<HTMLDivElement>(null);
-  const { channel, sendMessage, saveTemplate, retry, edit } =
+  const { channel, sendMessage, createTemplate, updateTemplate, retry, edit } =
     useChat(channelId);
 
   function scrollToBottom() {
@@ -36,8 +36,12 @@ export default function Chatbox({ channelId, model }: Props) {
     await sendMessage(content, model);
   }
 
-  async function handleSaveTemplate(content: RTCPrompt) {
-    await saveTemplate(content, model);
+  async function handleCreateTemplate(title: string, content: RTCPrompt) {
+    await createTemplate(title, content, model);
+  }
+
+  async function handleUpdateTemplate(id: string, content: RTCPrompt) {
+    await updateTemplate(id, content, model);
   }
 
   useEffect(() => {
@@ -87,7 +91,8 @@ export default function Chatbox({ channelId, model }: Props) {
         )}
         <Prompt
           onSubmit={handlePromptSubmit}
-          onSaveTemplate={handleSaveTemplate}
+          onCreateTemplate={handleCreateTemplate}
+          onUpdateTemplate={handleUpdateTemplate}
           isNew={!channel.messages?.length}
         />
       </footer>

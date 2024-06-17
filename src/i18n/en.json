@@ -18,6 +18,7 @@
         "role": "Define a role",
         "context": "Specify the context",
         "template": "Save template",
+        "useTemplate": "Use a template",
         "alreadyTemplate": "Template used"
       },
       "role": {
@@ -31,11 +32,18 @@
         "evaluate": "Evaluate"
       },
       "template": {
-        "title": "Save as a template",
-        "subtitle": "subtitle here...",
-        "placeholder": "Select a template or create one",
+        "title": {
+          "save": "Save as a template",
+          "use": "Use a template"
+        },
+        "subtitle": "Using templates ensures consistency, improves efficiency by reducing prompt creation time, and enhances clarity by making requests precise and understandable.",
+        "placeholder": {
+          "save": "Select a template or create one",
+          "use": "Select a template to import"
+        },
         "update": "Update template",
         "create": "Create template",
+        "use": "Use template",
         "cancel": "Cancel"
       }
     },

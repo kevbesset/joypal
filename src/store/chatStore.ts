@@ -114,8 +114,22 @@ export const chatStore = createSlice({
 
       setFromStorage("channels", state.channels);
     },
-    saveAsTemplate: (state, action: PayloadAction<ChatTemplate>) => {
+    createTemplate: (state, action: PayloadAction<ChatTemplate>) => {
       state.templates = [...state.templates, action.payload];
+
+      setFromStorage("templates", state.templates);
+    },
+    updateTemplate: (
+      state,
+      action: PayloadAction<{ id: string; messages: ChatMessage[] }>
+    ) => {
+      const { id, messages } = action.payload;
+
+      const templateIndex = state.templates.findIndex((t) => t.id === id);
+
+      if (templateIndex >= 0) {
+        state.templates[templateIndex].messages = messages;
+      }
 
       setFromStorage("templates", state.templates);
     },
@@ -151,7 +165,8 @@ export const {
   update,
   rename,
   create,
-  saveAsTemplate,
+  createTemplate,
+  updateTemplate,
   removeTemplate,
   renameTemplate,
 } = chatStore.actions;

@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import Icon from "@/components/ui/Icon";
 import useAutosizeTextArea from "@/libs/hooks/useAutosizeTextarea";
 import { useAppSelector } from "@/store";
-import { RTCPrompt } from "@/types/Chat.type";
+import { ChatTemplate, RTCPrompt } from "@/types/Chat.type";
 import { useRef, useState } from "react";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
@@ -16,11 +16,17 @@ const { block, element } = bem(styles);
 
 type Props = {
   onSubmit: (prompt: RTCPrompt) => void;
-  onSaveTemplate: (prompt: RTCPrompt) => void;
+  onCreateTemplate: (title: string, prompt: RTCPrompt) => void;
+  onUpdateTemplate: (id: string, prompt: RTCPrompt) => void;
   isNew?: boolean;
 };
 
-export default function Prompt({ onSubmit, onSaveTemplate, isNew }: Props) {
+export default function Prompt({
+  onSubmit,
+  onCreateTemplate,
+  onUpdateTemplate,
+  isNew,
+}: Props) {
   const { t } = useTranslation();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [promptValue, setPromptValue] = useState("");
@@ -75,12 +81,38 @@ export default function Prompt({ onSubmit, onSaveTemplate, isNew }: Props) {
     }
   }
 
-  function handleSaveTemplate() {
+  function handleUpdateTemplate(id: string) {
     if (promptRole || promptValue) {
-      onSaveTemplate({
+      onUpdateTemplate(id, {
         role: promptRole,
         task: promptValue,
       });
+    }
+  }
+
+  function handleCreateTemplate(title: string) {
+    if (promptRole || promptValue) {
+      onCreateTemplate(title, {
+        role: promptRole,
+        task: promptValue,
+      });
+    }
+  }
+
+  function handleUseTemplate(template: ChatTemplate) {
+    const firstRoleMessage = template.messages.find(
+      (message) => message.role === "system"
+    );
+    const firstUserMessage = template.messages.find(
+      (message) => message.role === "user"
+    );
+
+    if (firstRoleMessage) {
+      setPromptRole(firstRoleMessage.content);
+    }
+
+    if (firstUserMessage) {
+      setPromptValue(firstUserMessage.content);
     }
   }
 
@@ -105,7 +137,9 @@ export default function Prompt({ onSubmit, onSaveTemplate, isNew }: Props) {
                 className={element("button")}
               />
               <PromptTemplate
-                onSubmit={handleSaveTemplate}
+                onUpdate={handleUpdateTemplate}
+                onCreate={handleCreateTemplate}
+                onUseTemplate={handleUseTemplate}
                 isEmpty={isEmpty}
                 isTemplate={isTemplate}
                 className={element("button")}
