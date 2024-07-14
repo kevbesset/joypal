@@ -5,6 +5,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import classNames from "classnames";
 import bem from "react-bemthis";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import styles from "./PromptModelPicker.module.scss";
 
 const { block, element } = bem(styles);
@@ -44,8 +45,10 @@ export default function PromptModelPicker({ ...props }) {
           ))}
           <DropdownMenu.Separator className={element("separator")} />
           <DropdownMenu.Item className={element("item")}>
-            <Icon name="download" />
-            {t("chatbox.prompt.enhancer.moreModel")}
+            <Link to="/store">
+              <Icon name="download" />
+              {t("chatbox.prompt.enhancer.moreModel")}
+            </Link>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
