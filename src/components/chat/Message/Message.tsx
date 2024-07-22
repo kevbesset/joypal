@@ -46,14 +46,7 @@ export default function Message({ message, onRetry, onEdit }: Props) {
   function renderIcon() {
     switch (message.role) {
       case "user":
-        return (
-          <img
-            src="https://media.licdn.com/dms/image/C4E03AQGm-rwpONAatw/profile-displayphoto-shrink_400_400/0/1601377777018?e=2147483647&v=beta&t=G9A_yIODEox92NRv0f8VeEGK4XYQGPtEsFV-9e6AzXQ"
-            alt=""
-            width={32}
-            height={32}
-          />
-        );
+        return <Icon name="face" />;
       case "system":
       case "error":
         return <Icon name="settings_alert" />;

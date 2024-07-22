@@ -21,6 +21,11 @@
     background-color: var(--foregroundColor);
     overflow: hidden;
 
+    #{$blockSelector}--user & {
+      background-color: var(--infoColor);
+      color: var(--accentColorText);
+    }
+
     #{$blockSelector}--assistant & {
       background-color: var(--accentColor);
       color: var(--accentColorText);
